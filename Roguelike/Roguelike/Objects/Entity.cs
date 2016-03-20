@@ -44,12 +44,14 @@ namespace Roguelike
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            Game1.drawTexture(spriteBatch, Sprite, map.GetCell(X, Y));
+            Game1.drawTexture(spriteBatch, Sprite, map.GetCell(X, Y), renderLayer.spriteLayer);
         }
 
+#pragma warning disable
         public virtual bool Update(InputState inputState)
         {
             return false;
         }
+#pragma warning restore
     }
 }

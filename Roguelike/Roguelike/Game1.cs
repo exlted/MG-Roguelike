@@ -116,9 +116,9 @@ namespace Roguelike
                     continue;
 
                 if (cell.IsWalkable)
-                    drawTexture(spriteBatch, textures["floor"], cell);
+                    drawTexture(spriteBatch, textures["floor"], cell, renderLayer.backGroundLayer);
                 else
-                    drawTexture(spriteBatch, textures["wall"], cell);
+                    drawTexture(spriteBatch, textures["wall"], cell, renderLayer.backGroundLayer);
             }
             for (int i = 0; i < entities.Length; i++)
             {
@@ -129,13 +129,13 @@ namespace Roguelike
             base.Draw(gameTime);
         }
 
-        public static void drawTexture(SpriteBatch spriteBatch, Texture2D texture, Cell cell)
+        public static void drawTexture(SpriteBatch spriteBatch, Texture2D texture, Cell cell, renderLayer Layer)
         {
             var tint = Color.White;
             var position = new Vector2(cell.X * Statics.spriteWidth, cell.Y * Statics.spriteHeight);
             if (!cell.IsInFov && Statics.GameState != GameStates.Debugging)
                 tint = Color.Gray;
-            spriteBatch.Draw(texture, position, null, null, null, 0.0f, Vector2.One, tint, SpriteEffects.None, Statics.backGroundLayer);
+            spriteBatch.Draw(texture, position, null, null, null, 0.0f, Vector2.One, tint, SpriteEffects.None, Statics.Layers[(int)Layer]);
         }
     }
 }
