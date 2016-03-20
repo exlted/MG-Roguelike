@@ -40,6 +40,7 @@ namespace Roguelike
             Statics.GameState = GameStates.PlayerTurn;
             Statics.Camera.ViewportHeight = graphics.GraphicsDevice.Viewport.Height;
             Statics.Camera.ViewportWidth = graphics.GraphicsDevice.Viewport.Width;
+            Window.AllowUserResizing = true;
             base.Initialize();
         }
 
@@ -125,6 +126,9 @@ namespace Roguelike
                 entities[i].Draw(spriteBatch);
             }
             spriteBatch.End();
+
+            Statics.Camera.ViewportHeight = graphics.GraphicsDevice.Viewport.Height;
+            Statics.Camera.ViewportWidth = graphics.GraphicsDevice.Viewport.Width;
 
             base.Draw(gameTime);
         }
