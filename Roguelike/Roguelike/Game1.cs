@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using RogueSharp;
 using RogueSharp.MapCreation;
+using RogueSharp.Random;
 
 namespace Roguelike
 {
@@ -18,6 +19,7 @@ namespace Roguelike
         SpriteBatch spriteBatch;
         private IMap map;
         readonly Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+        Player player;
 
         public Game1()
         {
@@ -55,7 +57,8 @@ namespace Roguelike
             {
                 textures.Add(System.IO.Path.GetFileNameWithoutExtension(import[i]), Content.Load<Texture2D>("Textures/" + System.IO.Path.GetFileNameWithoutExtension(import[i])));
             }
-
+            player = new Player(0.25f, textures["player"], map);
+            textures.Remove("player");
         }
 
         /// <summary>
@@ -78,7 +81,7 @@ namespace Roguelike
                 Exit();
 
             // TODO: Add your update logic here
-
+            player.Update();
             base.Update(gameTime);
         }
 
@@ -88,25 +91,32 @@ namespace Roguelike
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
             // TODO: Add your drawing code here
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
-            const int sizeOfSprites = 64;
-            const float scale = .25f;
-
             foreach(Cell cell in map.GetAllCells())
             {
-                var position = new Vector2(cell.X * sizeOfSprites * scale, cell.Y * sizeOfSprites * scale);
-                if (cell.IsWalkable)
-                    spriteBatch.Draw(textures["floor"], position, null, null, null, 0.0f, new Vector2(scale, scale), Color.White);
-                else
-                    spriteBatch.Draw(textures["wall"], position, null, null, null, 0.0f, new Vector2(scale, scale), Color.White);
-            }
+                if (!cell.IsInFov)
+                    continue;
 
+                if (cell.IsWalkable)
+                    drawTexture(spriteBatch, textures["floor"], cell);
+                else
+                    drawTexture(spriteBatch, textures["wall"], cell);
+            }
+            player.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        static void drawTexture(SpriteBatch spriteBatch, Texture2D texture, Cell cell)
+        {
+            const int sizeOfSprites = 64;
+            const float scale = .25f;
+            var position = new Vector2(cell.X * sizeOfSprites * scale, cell.Y * sizeOfSprites * scale);
+            spriteBatch.Draw(texture, position, null, null, null, 0.0f, new Vector2(scale, scale), Color.White, SpriteEffects.None, Statics.backGroundLayer);
         }
     }
 }
