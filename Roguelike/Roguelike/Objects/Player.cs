@@ -18,6 +18,7 @@ namespace Roguelike
 
         public Player(float scale, Texture2D sprite, IMap Map) : base(scale, sprite, Map)
         {
+            Statics.Camera.CenterOn(map.GetCell(X, Y));
         }
 
         public override bool Update(InputState inputState)
@@ -51,6 +52,7 @@ namespace Roguelike
                 X += 1;
                 moved = true;
             }
+            if (moved) Statics.Camera.CenterOn(map.GetCell(X, Y));
             return moved;
         }
 

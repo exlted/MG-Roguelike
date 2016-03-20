@@ -24,5 +24,6 @@ namespace Roguelike
         public const int mapHeight = 30;
         public const int spriteWidth = 64;
         public const int spriteHeight = 64;
+        public static readonly Camera Camera = new Camera();
     }
 }

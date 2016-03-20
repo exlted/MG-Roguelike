@@ -38,6 +38,8 @@ namespace Roguelike
             IMapCreationStrategy<Map> mapCreationStrategy = new RandomRoomsMapCreationStrategy<Map>(Statics.mapWidth, Statics.mapHeight, 100, 7, 3);
             map = Map.Create(mapCreationStrategy);
             Statics.GameState = GameStates.PlayerTurn;
+            Statics.Camera.ViewportHeight = graphics.GraphicsDevice.Viewport.Height;
+            Statics.Camera.ViewportWidth = graphics.GraphicsDevice.Viewport.Width;
             base.Initialize();
         }
 
@@ -94,7 +96,7 @@ namespace Roguelike
                 {
                     entities[i].Update(inputState);
                 }
-            { }
+            Statics.Camera.Update(inputState, PlayerIndex.One);
             base.Update(gameTime);
         }
 
@@ -106,7 +108,7 @@ namespace Roguelike
         {
             GraphicsDevice.Clear(Color.Black);
             // TODO: Add your drawing code here
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null, null, null, null, Statics.Camera.TranslationMatrix);
 
             foreach(Cell cell in map.GetAllCells())
             {

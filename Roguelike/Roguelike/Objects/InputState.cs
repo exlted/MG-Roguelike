@@ -221,7 +221,7 @@ namespace Roguelike
         {
             PlayerIndex playerIndex;
 
-            return IsNewKeyPress(Keys.Down, controllingPlayer, out playerIndex) || IsNewButtonPress(Buttons.DPadDown, controllingPlayer, out playerIndex)
+            return IsNewButtonPress(Buttons.DPadDown, controllingPlayer, out playerIndex)
                    || IsNewButtonPress(Buttons.LeftThumbstickDown, controllingPlayer, out playerIndex) || IsNewKeyPress(Keys.S, controllingPlayer, out playerIndex);
         }
 

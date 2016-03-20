@@ -36,6 +36,7 @@ namespace Roguelike
         }
         public void Draw(SpriteBatch spriteBatch)
         {
+            /*
             if (_cells != null && Statics.GameState == GameStates.Debugging)
             {
                 for (int i = 0; i < _cells.Length; i++)
@@ -47,7 +48,7 @@ namespace Roguelike
                         break;
                     _cells.StepForward();
                 }
-            }
+            }*/
         }
     }
 }
