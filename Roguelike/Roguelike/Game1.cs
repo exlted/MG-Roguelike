@@ -1,11 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.IO;
 using RogueSharp;
 using RogueSharp.MapCreation;
-using RogueSharp.Random;
 
 namespace Roguelike
 {
@@ -18,8 +16,9 @@ namespace Roguelike
         readonly GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private IMap map;
+        private readonly InputState inputState = new InputState();
         readonly Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
-        Player player;
+        readonly Entity[] entities = new Entity[2];
 
         public Game1()
         {
@@ -38,6 +37,7 @@ namespace Roguelike
             // TODO: Add your initialization logic here
             IMapCreationStrategy<Map> mapCreationStrategy = new RandomRoomsMapCreationStrategy<Map>(50, 30, 100, 7, 3);
             map = Map.Create(mapCreationStrategy);
+            Statics.GameState = GameStates.PlayerTurn;
             base.Initialize();
         }
 
@@ -57,8 +57,10 @@ namespace Roguelike
             {
                 textures.Add(System.IO.Path.GetFileNameWithoutExtension(import[i]), Content.Load<Texture2D>("Textures/" + System.IO.Path.GetFileNameWithoutExtension(import[i])));
             }
-            player = new Player(0.25f, textures["player"], map);
+            entities[0] = new Player(0.25f, textures["player"], map);
             textures.Remove("player");
+            entities[1] = new AggressiveEnemy(0.25f, textures["hound"], map);
+            textures.Remove("hound");
         }
 
         /// <summary>
@@ -77,11 +79,22 @@ namespace Roguelike
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            inputState.Update();
+            if (inputState.IsExitGame(PlayerIndex.One))
                 Exit();
-
-            // TODO: Add your update logic here
-            player.Update();
+            else if (inputState.IsSpace(PlayerIndex.One))
+            {
+                if (Statics.GameState == GameStates.PlayerTurn)
+                    Statics.GameState = GameStates.Debugging;
+                else if (Statics.GameState == GameStates.Debugging)
+                    Statics.GameState = GameStates.PlayerTurn;
+            }
+            else if (entities[0].Update(inputState))
+                for (int i = 1; i < entities.Length; i++)
+                {
+                    entities[i].Update(inputState);
+                }
+            { }
             base.Update(gameTime);
         }
 
@@ -97,7 +110,7 @@ namespace Roguelike
 
             foreach(Cell cell in map.GetAllCells())
             {
-                if (!cell.IsInFov)
+                if (!cell.IsExplored && Statics.GameState != GameStates.Debugging)
                     continue;
 
                 if (cell.IsWalkable)
@@ -105,7 +118,10 @@ namespace Roguelike
                 else
                     drawTexture(spriteBatch, textures["wall"], cell);
             }
-            player.Draw(spriteBatch);
+            for (int i = 0; i < entities.Length; i++)
+            {
+                entities[i].Draw(spriteBatch);
+            }
             spriteBatch.End();
 
             base.Draw(gameTime);
@@ -115,8 +131,11 @@ namespace Roguelike
         {
             const int sizeOfSprites = 64;
             const float scale = .25f;
+            var tint = Color.White;
             var position = new Vector2(cell.X * sizeOfSprites * scale, cell.Y * sizeOfSprites * scale);
-            spriteBatch.Draw(texture, position, null, null, null, 0.0f, new Vector2(scale, scale), Color.White, SpriteEffects.None, Statics.backGroundLayer);
+            if (!cell.IsInFov && Statics.GameState != GameStates.Debugging)
+                tint = Color.Gray;
+            spriteBatch.Draw(texture, position, null, null, null, 0.0f, new Vector2(scale, scale), tint, SpriteEffects.None, Statics.backGroundLayer);
         }
     }
 }
