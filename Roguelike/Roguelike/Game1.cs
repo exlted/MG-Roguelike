@@ -3,17 +3,21 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.IO;
+using RogueSharp;
+using RogueSharp.MapCreation;
 
 namespace Roguelike
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
+    /// <seealso cref="Microsoft.Xna.Framework.Game" />
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
+        readonly GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+        private IMap map;
+        readonly Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
 
         public Game1()
         {
@@ -30,7 +34,8 @@ namespace Roguelike
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            IMapCreationStrategy<Map> mapCreationStrategy = new RandomRoomsMapCreationStrategy<Map>(50, 30, 100, 7, 3);
+            map = Map.Create(mapCreationStrategy);
             base.Initialize();
         }
 
@@ -45,10 +50,10 @@ namespace Roguelike
 
             // TODO: use this.Content to load your game content here
             string[] import;
-            import = Directory.GetFiles(Path.GetFullPath(@"Content/Textures"));
+            import = Directory.GetFiles(System.IO.Path.GetFullPath(@"Content/Textures"));
             for (int i = 0; i < import.Length; i++)
             {
-                textures.Add(Path.GetFileNameWithoutExtension(import[i]), Content.Load<Texture2D>("Textures/" + Path.GetFileNameWithoutExtension(import[i])));
+                textures.Add(System.IO.Path.GetFileNameWithoutExtension(import[i]), Content.Load<Texture2D>("Textures/" + System.IO.Path.GetFileNameWithoutExtension(import[i])));
             }
 
         }
@@ -84,12 +89,21 @@ namespace Roguelike
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            var position = new Vector2(0, 0);
-            var position2 = new Vector2(64, 64);
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
-            spriteBatch.Draw(textures["floor"], position, Color.White);
-            spriteBatch.Draw(textures["wall"], position2, Color.White);
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+
+            const int sizeOfSprites = 64;
+            const float scale = .25f;
+
+            foreach(Cell cell in map.GetAllCells())
+            {
+                var position = new Vector2(cell.X * sizeOfSprites * scale, cell.Y * sizeOfSprites * scale);
+                if (cell.IsWalkable)
+                    spriteBatch.Draw(textures["floor"], position, null, null, null, 0.0f, new Vector2(scale, scale), Color.White);
+                else
+                    spriteBatch.Draw(textures["wall"], position, null, null, null, 0.0f, new Vector2(scale, scale), Color.White);
+            }
+
             spriteBatch.End();
 
             base.Draw(gameTime);
