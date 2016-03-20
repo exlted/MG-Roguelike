@@ -44,10 +44,7 @@ namespace Roguelike
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            var multiplier = Scale * Sprite.Width;
-            spriteBatch.Draw(Sprite, new Vector2(X * multiplier, Y * multiplier),
-                null, null, null, 0.0f, new Vector2(Scale, Scale),
-                Color.White, SpriteEffects.None, Statics.spriteLayer);
+            Game1.drawTexture(spriteBatch, Sprite, map.GetCell(X, Y));
         }
 
         public virtual bool Update(InputState inputState)

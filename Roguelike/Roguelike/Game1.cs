@@ -35,7 +35,7 @@ namespace Roguelike
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            IMapCreationStrategy<Map> mapCreationStrategy = new RandomRoomsMapCreationStrategy<Map>(50, 30, 100, 7, 3);
+            IMapCreationStrategy<Map> mapCreationStrategy = new RandomRoomsMapCreationStrategy<Map>(Statics.mapWidth, Statics.mapHeight, 100, 7, 3);
             map = Map.Create(mapCreationStrategy);
             Statics.GameState = GameStates.PlayerTurn;
             base.Initialize();
@@ -127,15 +127,13 @@ namespace Roguelike
             base.Draw(gameTime);
         }
 
-        static void drawTexture(SpriteBatch spriteBatch, Texture2D texture, Cell cell)
+        public static void drawTexture(SpriteBatch spriteBatch, Texture2D texture, Cell cell)
         {
-            const int sizeOfSprites = 64;
-            const float scale = .25f;
             var tint = Color.White;
-            var position = new Vector2(cell.X * sizeOfSprites * scale, cell.Y * sizeOfSprites * scale);
+            var position = new Vector2(cell.X * Statics.spriteWidth, cell.Y * Statics.spriteHeight);
             if (!cell.IsInFov && Statics.GameState != GameStates.Debugging)
                 tint = Color.Gray;
-            spriteBatch.Draw(texture, position, null, null, null, 0.0f, new Vector2(scale, scale), tint, SpriteEffects.None, Statics.backGroundLayer);
+            spriteBatch.Draw(texture, position, null, null, null, 0.0f, Vector2.One, tint, SpriteEffects.None, Statics.backGroundLayer);
         }
     }
 }

@@ -40,13 +40,11 @@ namespace Roguelike
             {
                 for (int i = 0; i < _cells.Length; i++)
                 {
-                    if (_cells.CurrentStep != _cells.End)
-                        break;
                     const float scale = .25f;
                     var multiplier = scale * _sprite.Width;
-                    spriteBatch.Draw(_sprite, new Vector2(_cells.CurrentStep.X * multiplier, _cells.CurrentStep.Y * multiplier),
-                      null, null, null, 0.0f, new Vector2(scale, scale), Color.Blue * .2f,
-                      SpriteEffects.None, 0.6f);
+                    Game1.drawTexture(spriteBatch, _sprite, _cells.CurrentStep);
+                    if (_cells.CurrentStep != _cells.End)
+                        break;
                     _cells.StepForward();
                 }
             }

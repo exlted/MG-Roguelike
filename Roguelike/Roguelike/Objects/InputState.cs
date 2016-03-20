@@ -110,12 +110,6 @@ namespace Roguelike
             return (CurrentMouseState.ScrollWheelValue < LastMouseState.ScrollWheelValue);
         }
 
-        /// <summary>
-        ///    Helper for checking if a key was newly pressed during this update. The
-        ///    controllingPlayer parameter specifies which player to read input for.
-        ///    If this is null, it will accept input from any player. When a keypress
-        ///    is detected, the output playerIndex reports which player pressed it.
-        /// </summary>
         public bool IsNewKeyPress(Keys key, PlayerIndex? controllingPlayer, out PlayerIndex playerIndex)
         {
             if (controllingPlayer.HasValue)
@@ -135,12 +129,6 @@ namespace Roguelike
             }
         }
 
-        /// <summary>
-        ///    Helper for checking if a button was newly pressed during this update.
-        ///    The controllingPlayer parameter specifies which player to read input for.
-        ///    If this is null, it will accept input from any player. When a button press
-        ///    is detected, the output playerIndex reports which player pressed it.
-        /// </summary>
         public bool IsNewButtonPress(Buttons button, PlayerIndex? controllingPlayer, out PlayerIndex playerIndex)
         {
             if (controllingPlayer.HasValue)
@@ -209,15 +197,15 @@ namespace Roguelike
         {
             PlayerIndex playerIndex;
 
-            return IsNewKeyPress(Keys.Left, controllingPlayer, out playerIndex) || IsNewButtonPress(Buttons.DPadLeft, controllingPlayer, out playerIndex)
-                   || IsNewButtonPress(Buttons.LeftThumbstickLeft, controllingPlayer, out playerIndex) || IsNewKeyPress(Keys.A, controllingPlayer, out playerIndex);
+            return IsNewButtonPress(Buttons.DPadLeft, controllingPlayer, out playerIndex)|| IsNewButtonPress(Buttons.LeftThumbstickLeft, controllingPlayer, out playerIndex)
+                || IsNewKeyPress(Keys.A, controllingPlayer, out playerIndex);
         }
 
         public bool IsRight(PlayerIndex? controllingPlayer)
         {
             PlayerIndex playerIndex;
 
-            return IsNewKeyPress(Keys.Right, controllingPlayer, out playerIndex) || IsNewButtonPress(Buttons.DPadRight, controllingPlayer, out playerIndex)
+            return IsNewButtonPress(Buttons.DPadRight, controllingPlayer, out playerIndex)
                    || IsNewButtonPress(Buttons.LeftThumbstickRight, controllingPlayer, out playerIndex) || IsNewKeyPress(Keys.D, controllingPlayer, out playerIndex);
         }
 
@@ -225,7 +213,7 @@ namespace Roguelike
         {
             PlayerIndex playerIndex;
 
-            return IsNewKeyPress(Keys.Up, controllingPlayer, out playerIndex) || IsNewButtonPress(Buttons.DPadUp, controllingPlayer, out playerIndex)
+            return IsNewButtonPress(Buttons.DPadUp, controllingPlayer, out playerIndex)
                    || IsNewButtonPress(Buttons.LeftThumbstickUp, controllingPlayer, out playerIndex) || IsNewKeyPress(Keys.W, controllingPlayer, out playerIndex);
         }
 
@@ -241,6 +229,42 @@ namespace Roguelike
         {
             PlayerIndex playerIndex;
             return IsNewKeyPress(Keys.Space, controllingPlayer, out playerIndex);
+        }
+
+        public bool IsScrollLeft(PlayerIndex? controllingPlayer)
+        {
+            PlayerIndex playerIndex;
+            return IsNewKeyPress(Keys.Left, controllingPlayer, out playerIndex);
+        }
+
+        public bool IsScrollRight(PlayerIndex? controllingPlayer)
+        {
+            PlayerIndex playerIndex;
+            return IsNewKeyPress(Keys.Right, controllingPlayer, out playerIndex);
+        }
+
+        public bool IsScrollUp(PlayerIndex? controllingPlayer)
+        {
+            PlayerIndex playerIndex;
+            return IsNewKeyPress(Keys.Up, controllingPlayer, out playerIndex);
+        }
+
+        public bool IsScrollDown(PlayerIndex? controllingPlayer)
+        {
+            PlayerIndex playerIndex;
+            return IsNewKeyPress(Keys.Down, controllingPlayer, out playerIndex);
+        }
+
+        public bool IsZoomOut(PlayerIndex? controllingPlayer)
+        {
+            PlayerIndex playerIndex;
+            return (CurrentMouseState.ScrollWheelValue < LastMouseState.ScrollWheelValue) && IsKeyPressed(Keys.LeftControl, controllingPlayer, out playerIndex);
+        }
+
+        public bool IsZoomIn(PlayerIndex? controllingPlayer)
+        {
+            PlayerIndex playerIndex;
+            return (CurrentMouseState.ScrollWheelValue > LastMouseState.ScrollWheelValue) && IsKeyPressed(Keys.LeftControl, controllingPlayer, out playerIndex);
         }
     }
 }
