@@ -57,13 +57,13 @@ namespace Roguelike
         public void Update()
         {
             map.ComputeFov(X, Y, 30, true);
-            if (Keyboard.GetState().IsKeyDown(Keys.W) && map.GetCell(X, Y - 1).IsWalkable)
+            if (Keyboard.GetState().IsKeyDown(Keys.W) && map.IsWalkable(X, Y-1))
                 Y -= 1;
-            else if (Keyboard.GetState().IsKeyDown(Keys.S) && map.GetCell(X, Y + 1).IsWalkable)
+            else if (Keyboard.GetState().IsKeyDown(Keys.S) && map.IsWalkable(X, Y+1))
                 Y += 1;
-            if (Keyboard.GetState().IsKeyDown(Keys.A) && map.GetCell(X - 1, Y).IsWalkable)
+            if (Keyboard.GetState().IsKeyDown(Keys.A) && map.IsWalkable(X-1, Y))
                 X -= 1;
-            else if (Keyboard.GetState().IsKeyDown(Keys.D) && map.GetCell(X + 1, Y).IsWalkable)
+            else if (Keyboard.GetState().IsKeyDown(Keys.D) && map.IsWalkable(X+1, Y))
                 X += 1;
         }
 
