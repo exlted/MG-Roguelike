@@ -234,25 +234,25 @@ namespace Roguelike
         public bool IsScrollLeft(PlayerIndex? controllingPlayer)
         {
             PlayerIndex playerIndex;
-            return IsNewKeyPress(Keys.Left, controllingPlayer, out playerIndex);
+            return IsKeyPressed(Keys.Left, controllingPlayer, out playerIndex);
         }
 
         public bool IsScrollRight(PlayerIndex? controllingPlayer)
         {
             PlayerIndex playerIndex;
-            return IsNewKeyPress(Keys.Right, controllingPlayer, out playerIndex);
+            return IsKeyPressed(Keys.Right, controllingPlayer, out playerIndex);
         }
 
         public bool IsScrollUp(PlayerIndex? controllingPlayer)
         {
             PlayerIndex playerIndex;
-            return IsNewKeyPress(Keys.Up, controllingPlayer, out playerIndex);
+            return IsKeyPressed(Keys.Up, controllingPlayer, out playerIndex);
         }
 
         public bool IsScrollDown(PlayerIndex? controllingPlayer)
         {
             PlayerIndex playerIndex;
-            return IsNewKeyPress(Keys.Down, controllingPlayer, out playerIndex);
+            return IsKeyPressed(Keys.Down, controllingPlayer, out playerIndex);
         }
 
         public bool IsZoomOut(PlayerIndex? controllingPlayer)
