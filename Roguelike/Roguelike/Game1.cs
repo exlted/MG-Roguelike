@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Roguelike
 {
@@ -11,6 +13,7 @@ namespace Roguelike
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
 
         public Game1()
         {
@@ -41,6 +44,13 @@ namespace Roguelike
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            string[] import;
+            import = Directory.GetFiles(Path.GetFullPath(@"Content/Textures"));
+            for (int i = 0; i < import.Length; i++)
+            {
+                textures.Add(Path.GetFileNameWithoutExtension(import[i]), Content.Load<Texture2D>("Textures/" + Path.GetFileNameWithoutExtension(import[i])));
+            }
+
         }
 
         /// <summary>
@@ -74,8 +84,13 @@ namespace Roguelike
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            var position = new Vector2(0, 0);
+            var position2 = new Vector2(64, 64);
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            spriteBatch.Draw(textures["floor"], position, Color.White);
+            spriteBatch.Draw(textures["wall"], position2, Color.White);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
