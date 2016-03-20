@@ -42,6 +42,7 @@
     <Compile Include="Objects\AggressiveEnemy.cs" />
     <Compile Include="Objects\Entity.cs" />
     <Compile Include="Objects\InputState.cs" />
+    <Compile Include="Objects\PathToPlayer.cs" />
     <Compile Include="Objects\Player.cs" />
     <Compile Include="Objects\Statics.cs" />
     <Compile Include="Program.cs" />

@@ -15,7 +15,7 @@ namespace Roguelike
     }
     class Statics
     {
-        public static IRandom random = new DotNetRandom();
+        public static readonly IRandom random = new DotNetRandom();
         public static GameStates GameState { get; set; }
         public const float backGroundLayer = 0.8f;
         public const float spriteLayer = 0.5f;

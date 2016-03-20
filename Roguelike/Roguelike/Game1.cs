@@ -59,7 +59,7 @@ namespace Roguelike
             }
             entities[0] = new Player(0.25f, textures["player"], map);
             textures.Remove("player");
-            entities[1] = new AggressiveEnemy(0.25f, textures["hound"], map);
+            entities[1] = new AggressiveEnemy(0.25f, textures["hound"], map, new PathToPlayer(entities[0] as Player, map, textures["white"]));
             textures.Remove("hound");
         }
 
