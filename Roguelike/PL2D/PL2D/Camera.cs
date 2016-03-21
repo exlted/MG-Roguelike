@@ -5,12 +5,19 @@ using System.Linq;
 using System.Text;
 
 namespace PL2D
-    public class Camera
+{
+    class Camera
     {
         public Camera()
         {
             Zoom = 1.0f;
         }
+        #region Here Until Better Place Found
+        public int spriteWidth { get; set; }
+        public int spriteHeight { get; set; }
+        public int worldWidth { get; set; }
+        public int worldHeight { get; set; }
+        #endregion
 
         public Vector2 Position { get; private set; }
         public float Zoom { get; private set; }
@@ -73,15 +80,15 @@ namespace PL2D
 
         private Vector2 CenteredPosition(Cell cell, bool clampToMap = false)
         {
-            var cameraPosition = new Vector2(cell.X * Statics.spriteWidth, cell.Y * Statics.spriteHeight);
-            var cameraCenteredOnTilePosition = new Vector2(cameraPosition.X + Statics.spriteWidth / 2, cameraPosition.Y + Statics.spriteHeight / 2);
+            var cameraPosition = new Vector2(cell.X * spriteWidth, cell.Y * spriteHeight);
+            var cameraCenteredOnTilePosition = new Vector2(cameraPosition.X + spriteWidth / 2, cameraPosition.Y + spriteHeight / 2);
             return clampToMap ? MapClampedPosition(cameraCenteredOnTilePosition) : cameraCenteredOnTilePosition;
         }
 
         private Vector2 MapClampedPosition (Vector2 position)
         {
-            var CameraMax = new Vector2(Statics.mapWidth * Statics.spriteWidth - (ViewportWidth / Zoom / 2),
-                Statics.mapHeight * Statics.spriteHeight - (ViewportHeight / Zoom / 2));
+            var CameraMax = new Vector2(worldWidth * spriteWidth - (ViewportWidth / Zoom / 2),
+                worldHeight * spriteHeight - (ViewportHeight / Zoom / 2));
 
             return Vector2.Clamp(position, new Vector2(ViewportWidth / Zoom / 2, ViewportHeight / Zoom / 2), CameraMax);
         }
