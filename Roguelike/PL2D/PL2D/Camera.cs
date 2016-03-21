@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Roguelike
+namespace PL2D
 {
-    public class Camera
+    class Camera
     {
         public Camera()
         {
@@ -67,12 +67,12 @@ namespace Roguelike
             Position = position;
         }
 
-        public void CenterOn(RogueSharp.Cell cell)
+        public void CenterOn(Cell cell)
         {
             Position = CenteredPosition(cell, true);
         }
 
-        private Vector2 CenteredPosition( RogueSharp.Cell cell, bool clampToMap = false)
+        private Vector2 CenteredPosition( Cell cell, bool clampToMap = false)
         {
             var cameraPosition = new Vector2(cell.X * Statics.spriteWidth, cell.Y * Statics.spriteHeight);
             var cameraCenteredOnTilePosition = new Vector2(cameraPosition.X + Statics.spriteWidth / 2, cameraPosition.Y + Statics.spriteHeight / 2);
