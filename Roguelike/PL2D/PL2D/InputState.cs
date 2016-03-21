@@ -10,7 +10,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Roguelike
+namespace PL2D
 {
     /// <summary>
     ///    Helper for reading input from keyboard, gamepad, and touch input. This class
@@ -212,7 +212,7 @@ namespace Roguelike
         public bool isButtonPressed(Buttons selectedButton, PlayerIndex? controllingPlayer)
         {
             PlayerIndex playerIndex;
-            
+
             return IsButtonPressed(selectedButton, controllingPlayer, out playerIndex);
         }
 
