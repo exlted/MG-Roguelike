@@ -51,7 +51,7 @@ namespace PL2D
         {
             var newPosition = Position + cameraMovement;
 
-            Position = clampToMap ? MapClampedPosition(newPosition) : newPosition;
+            //Position = clampToMap ? MapClampedPosition(newPosition) : newPosition;
         }
 
         public Rectangle ViewportWorldBoundry()
@@ -69,9 +69,11 @@ namespace PL2D
 
         public void CenterOn(Cell cell)
         {
-            Position = CenteredPosition(cell, true);
+           // Position = CenteredPosition(cell, true);
         }
 
+        //TODO: Rebuild Positional Camera systems to be dynamic then remove comments calling these functions
+        /*
         private Vector2 CenteredPosition( Cell cell, bool clampToMap = false)
         {
             var cameraPosition = new Vector2(cell.X * Statics.spriteWidth, cell.Y * Statics.spriteHeight);
@@ -86,7 +88,7 @@ namespace PL2D
 
             return Vector2.Clamp(position, new Vector2(ViewportWidth / Zoom / 2, ViewportHeight / Zoom / 2), CameraMax);
         }
-
+        */
         public Vector2 WorldToScreen( Vector2 worldPosition )
         {
             return Vector2.Transform(worldPosition, TranslationMatrix);
