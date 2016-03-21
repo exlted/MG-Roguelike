@@ -39,6 +39,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game1.cs" />
+    <Compile Include="PL2D\Cell.cs" />
+    <Compile Include="PL2D\Entity.cs" />
+    <Compile Include="PL2D\Render.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
