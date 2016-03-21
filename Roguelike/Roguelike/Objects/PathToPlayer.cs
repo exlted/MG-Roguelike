@@ -32,20 +32,17 @@ namespace Roguelike
         }
         public void CreateFrom(int x, int y)
         {
-            if(x != _player.X && y != _player.Y)
+            if (x != _player.X || y != _player.Y)
                 _cells = _pathFinder.ShortestPath(_map.GetCell(x, y), _map.GetCell(_player.X, _player.Y));
         }
         public void Draw(SpriteBatch spriteBatch)
         {
             if (_cells != null && Statics.GameState == GameStates.Debugging)
             {
-                for (int i = 1; i < _cells.Length; i++)
+                for (Cell cell = _cells.Start; _cells.CurrentStep != _cells.End; cell = _cells.StepForward())
                 {
-                    var position = new Vector2(_cells.CurrentStep.X * Statics.spriteWidth, _cells.CurrentStep.Y * Statics.spriteHeight);
+                    var position = new Vector2(cell.X * Statics.spriteWidth, cell.Y * Statics.spriteHeight);
                     spriteBatch.Draw(_sprite, position, null, null, null, 0.0f, Vector2.One, Color.White, SpriteEffects.None, Statics.Layers[(int)renderLayer.pathLayer]);
-                    if (_cells.CurrentStep != _cells.End)
-                        break;
-                    _cells.StepForward();
                 }
             }
         }

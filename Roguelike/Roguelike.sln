@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roguelike", "Roguelike\Roguelike.csproj", "{BA6FEA4A-1A9D-4E81-81AB-593605A3D533}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL2D", "PL2D\PL2D.csproj", "{92809787-CFF7-45A9-922B-7DBA6B6BD55C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,6 +17,10 @@ Global
 		{BA6FEA4A-1A9D-4E81-81AB-593605A3D533}.Debug|x86.Build.0 = Debug|x86
 		{BA6FEA4A-1A9D-4E81-81AB-593605A3D533}.Release|x86.ActiveCfg = Release|x86
 		{BA6FEA4A-1A9D-4E81-81AB-593605A3D533}.Release|x86.Build.0 = Release|x86
+		{92809787-CFF7-45A9-922B-7DBA6B6BD55C}.Debug|x86.ActiveCfg = Debug|x86
+		{92809787-CFF7-45A9-922B-7DBA6B6BD55C}.Debug|x86.Build.0 = Debug|x86
+		{92809787-CFF7-45A9-922B-7DBA6B6BD55C}.Release|x86.ActiveCfg = Release|x86
+		{92809787-CFF7-45A9-922B-7DBA6B6BD55C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

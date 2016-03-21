@@ -55,10 +55,11 @@ namespace Roguelike
 
             // TODO: use this.Content to load your game content here
             string[] import;
-            import = Directory.GetFiles(System.IO.Path.GetFullPath(@"Content/Textures"));
+            import = Directory.GetFiles(System.IO.Path.GetFullPath(@"Content/Textures/"));
             for (int i = 0; i < import.Length; i++)
             {
-                textures.Add(System.IO.Path.GetFileNameWithoutExtension(import[i]), Content.Load<Texture2D>("Textures/" + System.IO.Path.GetFileNameWithoutExtension(import[i])));
+                if(!import[i].Contains(".xnb"))
+                    textures.Add(System.IO.Path.GetFileNameWithoutExtension(import[i]), Content.Load<Texture2D>("Textures/" + System.IO.Path.GetFileNameWithoutExtension(import[i])));
             }
             entities[0] = new Player(0.25f, textures["player"], map);
             textures.Remove("player");
