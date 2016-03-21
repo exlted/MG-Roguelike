@@ -57,7 +57,7 @@ namespace PL2D
             if (Tint.HasValue)
                 tint = Tint.GetValueOrDefault();
             else tint = Color.White;
-            Render.Renderable.Add(this);
+            GameLoopFunctions.Renderable.Add(this);
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
