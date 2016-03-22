@@ -212,7 +212,7 @@ namespace PL2D
         public bool isButtonPressed(Buttons selectedButton, PlayerIndex? controllingPlayer)
         {
             PlayerIndex playerIndex;
-            
+
             return IsButtonPressed(selectedButton, controllingPlayer, out playerIndex);
         }
 

@@ -12,7 +12,7 @@ namespace PL2D
     /// The base part of any rendered item
     /// </summary>
     class Cell
-    { 
+    {
         /// <summary>
         /// Gets or sets the position.
         /// </summary>
@@ -50,13 +50,14 @@ namespace PL2D
         public Color tint { get; protected set; }
 
         public Cell(float x, float y, Texture2D Texture, RenderLayers Layer, Color? Tint)
-        { 
+        {
             position = new Vector2(x, y);
             texture = Texture;
             layer = Layer;
             if (Tint.HasValue)
                 tint = Tint.GetValueOrDefault();
             else tint = Color.White;
+            GameLoopFunctions.Renderable.Add(this);
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)

@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PL2D.PL2D
+namespace PL2D
 {
     class Entity : Cell
     {
         public Entity(float x, float y, Texture2D Texture, RenderLayers Layer, Color? tint) : base(x, y, Texture, Layer, tint)
         {
-
+            GameLoopFunctions.Updatable.Add(this);
         }
 
         public virtual bool Update()

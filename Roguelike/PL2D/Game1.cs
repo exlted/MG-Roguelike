@@ -40,7 +40,7 @@ namespace PL2D
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            Assets.importContent(this);
         }
 
         /// <summary>
@@ -59,11 +59,11 @@ namespace PL2D
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            //Exit();
 
             // TODO: Add your update logic here
-
+            GameLoopFunctions.Update();
             base.Update(gameTime);
         }
 
@@ -76,7 +76,9 @@ namespace PL2D
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
+            GameLoopFunctions.Render(spriteBatch);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
