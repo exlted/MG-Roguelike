@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using PL2D.Exceptions;
 
 namespace PL2D
 {
@@ -28,6 +30,10 @@ namespace PL2D
         {
             // TODO: Add your initialization logic here
 
+            // TODO: Initialize camera child here
+            //Render.camera = new ___
+            if (Render.camera == null)
+                throw new CameraNotImplementedException("Please initialize the camera before starting the game");
             base.Initialize();
         }
 

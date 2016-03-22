@@ -43,6 +43,7 @@
     <Compile Include="PL2D\Camera.cs" />
     <Compile Include="PL2D\Cell.cs" />
     <Compile Include="PL2D\Entity.cs" />
+    <Compile Include="PL2D\Exceptions\RenderExceptions.cs" />
     <Compile Include="PL2D\GameLoopFunctions.cs" />
     <Compile Include="PL2D\InputState.cs" />
     <Compile Include="PL2D\Render.cs" />
