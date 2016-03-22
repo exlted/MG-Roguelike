@@ -12,12 +12,30 @@ namespace PL2D
 
     static class GameLoopFunctions
     {
+        /// <summary>
+        /// The list that holds all Entities (and children of Entities) automatically
+        /// </summary>
         public static List<Entity> Updatable = new List<Entity>();
+        /// <summary>
+        /// The list that holds all Cells (and children of Cells) automatically
+        /// </summary>
         public static List<Cell> Renderable = new List<Cell>();
         public static InputState inputState = new InputState();
+        /// <summary>
+        /// Adds a function to the update chain BEFORE the Entity-based update happens
+        /// </summary>
         public static addUpdate earlyUpdate;
+        /// <summary>
+        /// Adds a function to the update chain AFTER the Entity-based update happens
+        /// </summary>
         public static addUpdate lateUpdate;
+        /// <summary>
+        /// Adds a function to the render chain BEFORE the Cell-based render happens
+        /// </summary>
         public static addRender earlyRender;
+        /// <summary>
+        /// Adds a function to the render chain AFTER the Cell-based render happens
+        /// </summary>
         public static addRender lateRender;
 
 
