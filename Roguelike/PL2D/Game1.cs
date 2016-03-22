@@ -76,7 +76,7 @@ namespace PL2D
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null, null, null, null, Render.camera.TranslationMatrix);
             GameLoopFunctions.Render(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);

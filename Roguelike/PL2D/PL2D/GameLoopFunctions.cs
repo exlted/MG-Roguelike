@@ -20,6 +20,9 @@ namespace PL2D
         /// The list that holds all Cells (and children of Cells) automatically
         /// </summary>
         public static List<Cell> Renderable = new List<Cell>();
+        /// <summary>
+        /// The input state for any input to be taken
+        /// </summary>
         public static InputState inputState = new InputState();
         /// <summary>
         /// Adds a function to the update chain BEFORE the Entity-based update happens
