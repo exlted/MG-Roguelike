@@ -1,14 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using RogueSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Roguelike
 {
-    class PathToPlayer
+    internal class PathToPlayer
     {
         private readonly Player _player;
         private readonly IMap _map;
@@ -23,6 +19,7 @@ namespace Roguelike
             _sprite = sprite;
             _pathFinder = new PathFinder(map);
         }
+
         public Cell FirstCell
         {
             get
@@ -30,11 +27,13 @@ namespace Roguelike
                 return _cells.Start;
             }
         }
+
         public void CreateFrom(int x, int y)
         {
             if (x != _player.X || y != _player.Y)
                 _cells = _pathFinder.ShortestPath(_map.GetCell(x, y), _map.GetCell(_player.X, _player.Y));
         }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             if (_cells != null && Statics.GameState == GameStates.Debugging)

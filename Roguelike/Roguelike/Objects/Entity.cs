@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.Xna.Framework.Graphics;
 using RogueSharp;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using RogueSharp.Random;
 
 namespace Roguelike
 {
-    class Entity
+    internal class Entity
     {
-        Point pos;
+        private Point pos;
         protected readonly IMap map;
         public int X { get { return pos.x; } protected set { pos.x = value; } }
         public int Y { get { return pos.y; } protected set { pos.y = value; } }
@@ -30,7 +24,6 @@ namespace Roguelike
 
         private Cell GetRandomEmptyCell()
         {
-
             while (true)
             {
                 var x = Statics.random.Next(49);
@@ -48,10 +41,12 @@ namespace Roguelike
         }
 
 #pragma warning disable
+
         public virtual bool Update(InputState inputState)
         {
             return false;
         }
+
 #pragma warning restore
     }
 }

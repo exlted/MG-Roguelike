@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using RogueSharp.Random;
+﻿using RogueSharp.Random;
 
 namespace Roguelike
 {
@@ -21,7 +17,8 @@ namespace Roguelike
         spriteLayer = 2,
         LENGTH_OF_ARRAY
     }
-    class Statics
+
+    internal class Statics
     {
         public static readonly IRandom random = new DotNetRandom();
         public static GameStates GameState { get; set; }

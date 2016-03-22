@@ -1,11 +1,13 @@
 ﻿#region File Description
+
 //-----------------------------------------------------------------------------
 // InputState.cs
 //
 // Microsoft XNA Community Game Platform
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //-----------------------------------------------------------------------------
-#endregion
+
+#endregion File Description
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -197,7 +199,7 @@ namespace Roguelike
         {
             PlayerIndex playerIndex;
 
-            return IsNewButtonPress(Buttons.DPadLeft, controllingPlayer, out playerIndex)|| IsNewButtonPress(Buttons.LeftThumbstickLeft, controllingPlayer, out playerIndex)
+            return IsNewButtonPress(Buttons.DPadLeft, controllingPlayer, out playerIndex) || IsNewButtonPress(Buttons.LeftThumbstickLeft, controllingPlayer, out playerIndex)
                 || IsNewKeyPress(Keys.A, controllingPlayer, out playerIndex);
         }
 

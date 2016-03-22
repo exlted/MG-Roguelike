@@ -1,8 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Roguelike
 {
@@ -72,14 +68,14 @@ namespace Roguelike
             Position = CenteredPosition(cell, true);
         }
 
-        private Vector2 CenteredPosition( RogueSharp.Cell cell, bool clampToMap = false)
+        private Vector2 CenteredPosition(RogueSharp.Cell cell, bool clampToMap = false)
         {
             var cameraPosition = new Vector2(cell.X * Statics.spriteWidth, cell.Y * Statics.spriteHeight);
             var cameraCenteredOnTilePosition = new Vector2(cameraPosition.X + Statics.spriteWidth / 2, cameraPosition.Y + Statics.spriteHeight / 2);
             return clampToMap ? MapClampedPosition(cameraCenteredOnTilePosition) : cameraCenteredOnTilePosition;
         }
 
-        private Vector2 MapClampedPosition (Vector2 position)
+        private Vector2 MapClampedPosition(Vector2 position)
         {
             var CameraMax = new Vector2(Statics.mapWidth * Statics.spriteWidth - (ViewportWidth / Zoom / 2),
                 Statics.mapHeight * Statics.spriteHeight - (ViewportHeight / Zoom / 2));
@@ -87,7 +83,7 @@ namespace Roguelike
             return Vector2.Clamp(position, new Vector2(ViewportWidth / Zoom / 2, ViewportHeight / Zoom / 2), CameraMax);
         }
 
-        public Vector2 WorldToScreen( Vector2 worldPosition )
+        public Vector2 WorldToScreen(Vector2 worldPosition)
         {
             return Vector2.Transform(worldPosition, TranslationMatrix);
         }
@@ -114,7 +110,7 @@ namespace Roguelike
             else if (inputState.IsZoomOut(controllingPlayer))
                 AdjustZoom(-.25f);
 
-            if(cameraMovement!= Vector2.Zero)
+            if (cameraMovement != Vector2.Zero)
             {
                 cameraMovement.Normalize();
             }

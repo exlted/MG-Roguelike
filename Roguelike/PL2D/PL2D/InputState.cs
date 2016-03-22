@@ -1,11 +1,13 @@
 ﻿#region File Description
+
 //-----------------------------------------------------------------------------
 // InputState.cs
 //
 // Microsoft XNA Community Game Platform
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //-----------------------------------------------------------------------------
-#endregion
+
+#endregion File Description
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -20,9 +22,10 @@ namespace PL2D
     /// </summary>
     public class InputState
     {
-        delegate bool InputType(Keys selectedKey, PlayerIndex? controllingPlayer);
+        private delegate bool InputType(Keys selectedKey, PlayerIndex? controllingPlayer);
 
         #region Fields&Update
+
         public const int MaxInputs = 4;
 
         public readonly GamePadState[] CurrentGamePadStates;
@@ -82,9 +85,11 @@ namespace PL2D
             LastMouseState = CurrentMouseState;
             CurrentMouseState = Mouse.GetState();
         }
-        #endregion
+
+        #endregion Fields&Update
 
         #region CheckButtonInput
+
         /// <summary>
         /// Determines whether the specified key has been pressed since the last update
         /// </summary>
@@ -188,7 +193,8 @@ namespace PL2D
                          || IsButtonPressed(button, PlayerIndex.Three, out playerIndex) || IsButtonPressed(button, PlayerIndex.Four, out playerIndex));
             }
         }
-        #endregion
+
+        #endregion CheckButtonInput
 
         #region AllInputChecks
 
@@ -299,6 +305,6 @@ namespace PL2D
             return (CurrentMouseState.ScrollWheelValue < LastMouseState.ScrollWheelValue);
         }
 
-        #endregion
+        #endregion AllInputChecks
     }
 }

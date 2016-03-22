@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using System.IO;
 using RogueSharp;
 using RogueSharp.MapCreation;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Roguelike
 {
@@ -13,12 +13,12 @@ namespace Roguelike
     /// <seealso cref="Microsoft.Xna.Framework.Game" />
     public class Game1 : Game
     {
-        readonly GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        private readonly GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
         private IMap map;
         private readonly InputState inputState = new InputState();
-        readonly Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
-        readonly Entity[] entities = new Entity[2];
+        private readonly Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+        private readonly Entity[] entities = new Entity[2];
 
         public Game1()
         {
@@ -58,7 +58,7 @@ namespace Roguelike
             import = Directory.GetFiles(System.IO.Path.GetFullPath(@"Content/Textures/"));
             for (int i = 0; i < import.Length; i++)
             {
-                if(!import[i].Contains(".xnb"))
+                if (!import[i].Contains(".xnb"))
                     textures.Add(System.IO.Path.GetFileNameWithoutExtension(import[i]), Content.Load<Texture2D>("Textures/" + System.IO.Path.GetFileNameWithoutExtension(import[i])));
             }
             entities[0] = new Player(0.25f, textures["player"], map);
@@ -112,7 +112,7 @@ namespace Roguelike
             // TODO: Add your drawing code here
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null, null, null, null, Statics.Camera.TranslationMatrix);
 
-            foreach(Cell cell in map.GetAllCells())
+            foreach (Cell cell in map.GetAllCells())
             {
                 if (!cell.IsExplored && Statics.GameState != GameStates.Debugging)
                     continue;

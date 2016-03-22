@@ -1,23 +1,22 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace PL2D
 {
-    class Camera
+    internal class Camera
     {
         public Camera()
         {
             Zoom = 1.0f;
         }
+
         #region Here Until Better Place Found
+
         public int spriteWidth { get; set; }
         public int spriteHeight { get; set; }
         public int worldWidth { get; set; }
         public int worldHeight { get; set; }
-        #endregion
+
+        #endregion Here Until Better Place Found
 
         public Vector2 Position { get; private set; }
         public float Zoom { get; private set; }
@@ -85,7 +84,7 @@ namespace PL2D
             return clampToMap ? MapClampedPosition(cameraCenteredOnTilePosition) : cameraCenteredOnTilePosition;
         }
 
-        private Vector2 MapClampedPosition (Vector2 position)
+        private Vector2 MapClampedPosition(Vector2 position)
         {
             var CameraMax = new Vector2(worldWidth * spriteWidth - (ViewportWidth / Zoom / 2),
                 worldHeight * spriteHeight - (ViewportHeight / Zoom / 2));
@@ -93,7 +92,7 @@ namespace PL2D
             return Vector2.Clamp(position, new Vector2(ViewportWidth / Zoom / 2, ViewportHeight / Zoom / 2), CameraMax);
         }
 
-        public Vector2 WorldToScreen( Vector2 worldPosition )
+        public Vector2 WorldToScreen(Vector2 worldPosition)
         {
             return Vector2.Transform(worldPosition, TranslationMatrix);
         }

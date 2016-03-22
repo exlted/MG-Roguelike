@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using RogueSharp;
 
 namespace Roguelike
 {
-    class AggressiveEnemy : Entity
+    internal class AggressiveEnemy : Entity
     {
         private readonly PathToPlayer path;
+
         public AggressiveEnemy(float scale, Texture2D sprite, IMap map, PathToPlayer Path) : base(scale, sprite, map)
         {
             path = Path;
@@ -18,7 +15,7 @@ namespace Roguelike
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if(map.IsInFov(X, Y) || Statics.GameState == GameStates.Debugging)
+            if (map.IsInFov(X, Y) || Statics.GameState == GameStates.Debugging)
                 base.Draw(spriteBatch);
             path.Draw(spriteBatch);
         }
