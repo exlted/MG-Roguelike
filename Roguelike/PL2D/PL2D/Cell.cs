@@ -54,9 +54,7 @@ namespace PL2D
             position = new Vector2(x, y);
             texture = Texture;
             layer = Layer;
-            if (Tint.HasValue)
-                tint = Tint.GetValueOrDefault();
-            else tint = Color.White;
+            tint = Tint.HasValue ? Tint.GetValueOrDefault() : Color.White;
             GameLoopFunctions.Renderable.Add(this);
         }
 

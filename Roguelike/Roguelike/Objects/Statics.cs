@@ -18,7 +18,7 @@ namespace Roguelike
         LENGTH_OF_ARRAY
     }
 
-    internal class Statics
+    internal static class Statics
     {
         public static readonly IRandom random = new DotNetRandom();
         public static GameStates GameState { get; set; }

@@ -12,18 +12,19 @@ namespace PL2D
         /// <summary>
         /// The list that holds all Entities (and children of Entities) automatically
         /// </summary>
-        public static List<Entity> Updatable = new List<Entity>();
+        public static readonly List<Entity> Updatable = new List<Entity>();
 
         /// <summary>
         /// The list that holds all Cells (and children of Cells) automatically
         /// </summary>
-        public static List<Cell> Renderable = new List<Cell>();
+        public static readonly List<Cell> Renderable = new List<Cell>();
 
         /// <summary>
         /// The input state for any input to be taken
         /// </summary>
-        public static InputState inputState = new InputState();
+        public static readonly InputState inputState = new InputState();
 
+#pragma warning disable CC0074
         /// <summary>
         /// Adds a function to the update chain BEFORE the Entity-based update happens
         /// </summary>
@@ -43,7 +44,9 @@ namespace PL2D
         /// Adds a function to the render chain AFTER the Cell-based render happens
         /// </summary>
         public static addRender lateRender;
-
+#pragma warning restore CC0074
+#pragma warning disable CC0016
+        //Update/Render delegates need to be called, but can't be sure to have been assigned to
         public static void Update()
         {
             if (earlyUpdate != null)
@@ -65,4 +68,5 @@ namespace PL2D
                 lateRender(spriteBatch);
         }
     }
+#pragma warning restore CC0016
 }

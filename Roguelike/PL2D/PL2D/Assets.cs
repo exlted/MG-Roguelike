@@ -8,9 +8,9 @@ namespace PL2D
 {
     internal static class Assets
     {
-        public static Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
-        public static Dictionary<string, SoundEffect> sounds = new Dictionary<string, SoundEffect>();
-        public static Dictionary<string, SpriteFont> fonts = new Dictionary<string, SpriteFont>();
+        public static readonly Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+        public static readonly Dictionary<string, SoundEffect> sounds = new Dictionary<string, SoundEffect>();
+        public static readonly Dictionary<string, SpriteFont> fonts = new Dictionary<string, SpriteFont>();
 
         public static void importTextures(Game game)
         {

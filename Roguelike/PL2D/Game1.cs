@@ -9,7 +9,7 @@ namespace PL2D
     /// </summary>
     public class Game1 : Game
     {
-        private GraphicsDeviceManager graphics;
+        private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
         public Game1()

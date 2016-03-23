@@ -15,12 +15,14 @@ namespace PL2D
 
     internal static class Render
     {
-        public static float[] Layers = { 0.9f, 0.8f, 0.7f, 0.6f, 0.5f, 0.4f };
+        public static readonly float[] Layers = { 0.9f, 0.8f, 0.7f, 0.6f, 0.5f, 0.4f };
 
+#pragma warning disable CC0074 // Make field readonly
         /// <summary>
         /// The main gameplay camera - INITIALIZE TO OVERIDEN CAMERA TYPE BEFORE USING
         /// </summary>
         public static Camera camera;
+#pragma warning restore CC0074 // Make field readonly
 
         private static readonly Color White = Color.White;
 
