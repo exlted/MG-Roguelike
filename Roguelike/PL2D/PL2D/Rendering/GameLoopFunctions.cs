@@ -46,9 +46,17 @@ namespace PL2D
         public static addRender lateRender;
 #pragma warning restore CC0074
 #pragma warning disable CC0016
-        //Update/Render delegates need to be called, but can't be sure to have been assigned to
+        //Update/Render delegates need to be called, but can't be sure to have been assigned to        
+        /// <summary>
+        /// Add to the Update(GameTime) portion of Monogame's default class.
+        /// Automatically updates all classes inheriting from Entity.
+        /// Add a void(void) to either earlyUpdate or lateUpdate to add other objects to be updated.
+        /// </summary>
+        /// <exception cref="Exceptions.CameraNotImplementedException">Please initialize the camera before starting the game</exception>
         public static void Update()
         {
+            if (PL2D.Render.camera == null)
+                throw new Exceptions.CameraNotImplementedException("Please initialize the camera before starting the game");
             if (earlyUpdate != null)
                 earlyUpdate();
             inputState.Update();
@@ -58,14 +66,22 @@ namespace PL2D
                 lateUpdate();
         }
 
+        /// <summary>
+        /// Add to the Draw(GameTime) portion of Monogame's default class.
+        /// Automatically renders all classes inheriting from Cell.
+        /// Add a void(SpriteBatch) to either earlyRender or lateRender to add other objects to be rendered.
+        /// </summary>
+        /// <param name="spriteBatch">The sprite batch.</param>
         public static void Render(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null, null, null, null, PL2D.Render.camera.TranslationMatrix);
             if (earlyRender != null)
                 earlyRender(spriteBatch);
             foreach (Cell C in Renderable)
                 C.Draw(spriteBatch);
             if (lateRender != null)
                 lateRender(spriteBatch);
+            spriteBatch.End();
         }
     }
 #pragma warning restore CC0016

@@ -30,8 +30,6 @@ namespace PL2D
 
             // TODO: Initialize camera child here
             //Render.camera = new ___
-            if (Render.camera == null)
-                throw new CameraNotImplementedException("Please initialize the camera before starting the game");
             base.Initialize();
         }
 
@@ -78,11 +76,9 @@ namespace PL2D
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null, null, null, null, Render.camera.TranslationMatrix);
+            
             GameLoopFunctions.Render(spriteBatch);
-            spriteBatch.End();
+
             base.Draw(gameTime);
         }
     }
