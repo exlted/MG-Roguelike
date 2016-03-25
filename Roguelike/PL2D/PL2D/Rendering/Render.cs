@@ -28,8 +28,12 @@ namespace PL2D
 
         public static void drawTexture(SpriteBatch spriteBatch, Texture2D texture, Vector2 cell, RenderLayers Layer, Color tint)
         {
-            var position = new Vector2(cell.X, cell.Y);
-            spriteBatch.Draw(texture, position, null, null, null, 0.0f, Vector2.One, tint, SpriteEffects.None, Layers[(int)Layer]);
+            spriteBatch.Draw(texture, cell, null, null, null, 0.0f, Vector2.One, tint, SpriteEffects.None, Layers[(int)Layer]);
+        }
+
+        public static void drawTexture(SpriteBatch spriteBatch, Texture2D texture, Rectangle cell, RenderLayers Layer, Color tint)
+        {
+            spriteBatch.Draw(texture, destinationRectangle: cell, layerDepth: Layers[(int)Layer], color: tint);
         }
     }
 }

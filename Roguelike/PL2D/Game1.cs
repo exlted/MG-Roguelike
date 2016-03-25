@@ -30,6 +30,7 @@ namespace PL2D
 
             // TODO: Initialize camera child here
             //Render.camera = new ___
+            GameLoopFunctions.Init();
             base.Initialize();
         }
 
@@ -76,7 +77,7 @@ namespace PL2D
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            
+
             GameLoopFunctions.Render(spriteBatch);
 
             base.Draw(gameTime);

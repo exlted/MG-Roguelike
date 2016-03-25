@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PL2D.Rendering.GUI.GUI_Elements;
-using NLua;
 
 namespace PL2D.Rendering.GUI
 {
@@ -13,19 +12,8 @@ namespace PL2D.Rendering.GUI
 
     }
 
-    class luaGUI : IDisposable
+    interface IGUIElement
     {
-        public Lua Lua { get; set; }
-
-        public luaGUI()
-        {
-            Lua = new Lua();
-        }
-
-        public void Dispose()
-        {
-            Lua.Dispose();
-            GC.SuppressFinalize(this);
-        }
+        void Render(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch);
     }
 }
