@@ -7,7 +7,7 @@ namespace PL2D
 
     internal delegate void addRender(SpriteBatch spriteBatch);
 
-    internal static class GameLoopFunctions
+    static class GameLoopFunctions
     {
         /// <summary>
         /// The list that holds all Entities (and children of Entities) automatically
@@ -46,6 +46,14 @@ namespace PL2D
         public static addRender lateRender;
 #pragma warning restore CC0074
 #pragma warning disable CC0016
+        public static void Instanciate()
+        {
+            if (PL2D.Render.camera == null)
+                throw new Exceptions.CameraNotImplementedException("Please initialize the camera before starting the game");
+
+
+        }
+        
         //Update/Render delegates need to be called, but can't be sure to have been assigned to        
         /// <summary>
         /// Add to the Update(GameTime) portion of Monogame's default class.
@@ -55,8 +63,6 @@ namespace PL2D
         /// <exception cref="Exceptions.CameraNotImplementedException">Please initialize the camera before starting the game</exception>
         public static void Update()
         {
-            if (PL2D.Render.camera == null)
-                throw new Exceptions.CameraNotImplementedException("Please initialize the camera before starting the game");
             if (earlyUpdate != null)
                 earlyUpdate();
             inputState.Update();
