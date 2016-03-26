@@ -4,6 +4,7 @@ using RogueSharp;
 using RogueSharp.MapCreation;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Roguelike
 {
@@ -35,8 +36,8 @@ namespace Roguelike
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            IMapCreationStrategy<Map> mapCreationStrategy = new RandomRoomsMapCreationStrategy<Map>(Statics.mapWidth, Statics.mapHeight, 100, 7, 3);
-            map = Map.Create(mapCreationStrategy);
+            IMapCreationStrategy<Map> _mapCreationStrategy = new RandomRoomsMapCreationStrategy<Map>(Statics.MapWidth, Statics.MapHeight, 100, 7, 3);
+            map = Map.Create(_mapCreationStrategy);
             Statics.GameState = GameStates.PlayerTurn;
             Statics.Camera.ViewportHeight = graphics.GraphicsDevice.Viewport.Height;
             Statics.Camera.ViewportWidth = graphics.GraphicsDevice.Viewport.Width;
@@ -54,16 +55,19 @@ namespace Roguelike
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            string[] import;
-            import = Directory.GetFiles(System.IO.Path.GetFullPath(@"Content/Textures/"));
-            for (int i = 0; i < import.Length; i++)
+            var _import  = Directory.GetFiles(System.IO.Path.GetFullPath(@"Content/Textures/"));
+            var _paths =
+                from _path in _import
+                where _path.Contains(".png")
+                select _path;
+
+            foreach (var _i in _paths)
             {
-                if (!import[i].Contains(".xnb"))
-                    textures.Add(System.IO.Path.GetFileNameWithoutExtension(import[i]), Content.Load<Texture2D>("Textures/" + System.IO.Path.GetFileNameWithoutExtension(import[i])));
+                textures.Add(System.IO.Path.GetFileNameWithoutExtension(_i), Content.Load<Texture2D>("Textures/" + System.IO.Path.GetFileNameWithoutExtension(_i)));
             }
             entities[0] = new Player(0.25f, textures["player"], map);
             textures.Remove("player");
-            entities[1] = new AggressiveEnemy(0.25f, textures["hound"], map, new PathToPlayer(entities[0] as Player, map, textures["white"]));
+            entities[1] = new AggressiveEnemy(0.25f, textures["hound"], map, new PathToPlayer((Player)entities[0], map, textures["white"]));
             textures.Remove("hound");
         }
 
@@ -94,9 +98,9 @@ namespace Roguelike
                     Statics.GameState = GameStates.PlayerTurn;
             }
             else if (entities[0].Update(inputState))
-                for (int i = 1; i < entities.Length; i++)
+                for (var _i = 1; _i < entities.Length; _i++)
                 {
-                    entities[i].Update(inputState);
+                    entities[_i].Update(inputState);
                 }
             Statics.Camera.Update(inputState, PlayerIndex.One);
             base.Update(gameTime);
@@ -112,19 +116,15 @@ namespace Roguelike
             // TODO: Add your drawing code here
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null, null, null, null, Statics.Camera.TranslationMatrix);
 
-            foreach (Cell cell in map.GetAllCells())
+            foreach (var _cell in map.GetAllCells())
             {
-                if (!cell.IsExplored && Statics.GameState != GameStates.Debugging)
+                if (!_cell.IsExplored && Statics.GameState != GameStates.Debugging)
                     continue;
-
-                if (cell.IsWalkable)
-                    drawTexture(spriteBatch, textures["floor"], cell, renderLayer.backGroundLayer);
-                else
-                    drawTexture(spriteBatch, textures["wall"], cell, renderLayer.backGroundLayer);
+                DrawTexture(spriteBatch, _cell.IsWalkable? textures["floor"] : textures["wall"], _cell, RenderLayer.BackGroundLayer);
             }
-            for (int i = 0; i < entities.Length; i++)
+            foreach (var _i in entities)
             {
-                entities[i].Draw(spriteBatch);
+                _i.Draw(spriteBatch);
             }
             spriteBatch.End();
 
@@ -134,13 +134,13 @@ namespace Roguelike
             base.Draw(gameTime);
         }
 
-        public static void drawTexture(SpriteBatch spriteBatch, Texture2D texture, Cell cell, renderLayer Layer)
+        public static void DrawTexture(SpriteBatch spriteBatch, Texture2D texture, Cell cell, RenderLayer layer)
         {
-            var tint = Color.White;
-            var position = new Vector2(cell.X * Statics.spriteWidth, cell.Y * Statics.spriteHeight);
+            var _white = Color.White;
+            var _position = new Vector2(cell.X * Statics.SpriteWidth, cell.Y * Statics.SpriteHeight);
             if (!cell.IsInFov && Statics.GameState != GameStates.Debugging)
-                tint = Color.Gray;
-            spriteBatch.Draw(texture, position, null, null, null, 0.0f, Vector2.One, tint, SpriteEffects.None, Statics.Layers[(int)Layer]);
+                _white = Color.Gray;
+            spriteBatch.Draw(texture, _position, null, null, null, 0.0f, Vector2.One, _white, SpriteEffects.None, Statics.Layers[(int)layer]);
         }
     }
 }

@@ -1,19 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PL2D.Rendering.GUI.GUI_Elements
 {
-    class Button : IGUIElement
+    internal class Button : IGuiElement
     {
-        public enum buttonState { disabled = 0, shown = 1, clicked = 2 };
-        public buttonState state { get; set; }
-        Texture2D[] textures = new Texture2D[3];
+        public enum ButtonState { Disabled = 0, Shown = 1, Clicked = 2 };
+        public ButtonState State { get; set; }
+        private readonly Texture2D[] textures = new Texture2D[3];
         public Texture2D this[int index]
         {
             set
@@ -22,33 +17,35 @@ namespace PL2D.Rendering.GUI.GUI_Elements
             }
         }
 
-        public Rectangle position { get; set; }
-        public RenderLayers layer { get; set; }
-        public Color tint { get; set; }
+        public Rectangle Position { get; set; }
+        public RenderLayers Layer { get; set; }
+        public Color Tint { get; set; }
+#pragma warning disable CC0074 // Make field readonly
         public EventHandler Click;
+#pragma warning restore CC0074 // Make field readonly
         public Button()
         {
             textures[0] = textures[1] = textures[2] = null;
-            position = new Rectangle(0, 0, 0, 0);
-            layer = RenderLayers.FarBackgroundLayer;
-            tint = Color.Black;
+            Position = new Rectangle(0, 0, 0, 0);
+            Layer = RenderLayers.FarBackgroundLayer;
+            Tint = Color.Black;
         }
 
-        public Button(Texture2D disabled, Texture2D shown, Texture2D clicked, Rectangle Position, Color? Tint, RenderLayers Layer = RenderLayers.FrontSpriteLayer)
+        public Button(Texture2D disabled, Texture2D shown, Texture2D clicked, Rectangle position, Color? tint, RenderLayers layer = RenderLayers.FrontSpriteLayer)
         {
             textures[0] = disabled;
             textures[1] = shown;
             textures[2] = clicked;
-            position = Position;
-            tint = Tint.GetValueOrDefault();
-            layer = Layer;
+            Position = position;
+            Tint = tint.GetValueOrDefault();
+            Layer = layer;
         }
 
         public void Render(SpriteBatch spriteBatch)
         {
-            if(textures[(int)state] != null)
+            if(textures[(int)State] != null)
             {
-                PL2D.Render.drawTexture(spriteBatch, textures[(int)state], position, layer, tint);
+                PL2D.Render.DrawTexture(spriteBatch, textures[(int)State], Position, Layer, Tint);
             }
         }
 
@@ -57,12 +54,9 @@ namespace PL2D.Rendering.GUI.GUI_Elements
         /// </summary>
         public void Update()
         {
-            if (GameLoopFunctions.inputState.IsNewLeftMouseClick(out GameLoopFunctions.mouseState))
+            if (GameLoopFunctions.InputState.IsNewLeftMouseClick(out GameLoopFunctions.MouseState) && Position.Contains(GameLoopFunctions.MouseState.Position))
             {
-                if(position.Contains(GameLoopFunctions.mouseState.Position))
-                {
-                    Click?.Invoke(this, new EventArgs());
-                }
+                Click?.Invoke(this, new EventArgs());
             }
         }
     }

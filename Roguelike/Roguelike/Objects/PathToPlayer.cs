@@ -6,42 +6,36 @@ namespace Roguelike
 {
     internal class PathToPlayer
     {
-        private readonly Player _player;
-        private readonly IMap _map;
-        private readonly Texture2D _sprite;
-        private readonly PathFinder _pathFinder;
-        private Path _cells;
+        private readonly Player player;
+        private readonly IMap map;
+        private readonly Texture2D sprite;
+        private readonly PathFinder pathFinder;
+        private Path cells;
 
         public PathToPlayer(Player player, IMap map, Texture2D sprite)
         {
-            _player = player;
-            _map = map;
-            _sprite = sprite;
-            _pathFinder = new PathFinder(map);
+            this.player = player;
+            this.map = map;
+            this.sprite = sprite;
+            pathFinder = new PathFinder(map);
         }
 
-        public Cell FirstCell
-        {
-            get
-            {
-                return _cells.Start;
-            }
-        }
+        public Cell FirstCell => cells.Start;
 
         public void CreateFrom(int x, int y)
         {
-            if (x != _player.X || y != _player.Y)
-                _cells = _pathFinder.ShortestPath(_map.GetCell(x, y), _map.GetCell(_player.X, _player.Y));
+            if (x != player.X || y != player.Y)
+                cells = pathFinder.ShortestPath(map.GetCell(x, y), map.GetCell(player.X, player.Y));
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (_cells != null && Statics.GameState == GameStates.Debugging)
+            if (cells != null && Statics.GameState == GameStates.Debugging)
             {
-                for (Cell cell = _cells.Start; _cells.CurrentStep != _cells.End; cell = _cells.StepForward())
+                for (var _cell = cells.Start; cells.CurrentStep != cells.End; _cell = cells.StepForward())
                 {
-                    var position = new Vector2(cell.X * Statics.spriteWidth, cell.Y * Statics.spriteHeight);
-                    spriteBatch.Draw(_sprite, position, null, null, null, 0.0f, Vector2.One, Color.White, SpriteEffects.None, Statics.Layers[(int)renderLayer.pathLayer]);
+                    var _position = new Vector2(_cell.X * Statics.SpriteWidth, _cell.Y * Statics.SpriteHeight);
+                    spriteBatch.Draw(sprite, _position, null, null, null, 0.0f, Vector2.One, Color.White, SpriteEffects.None, Statics.Layers[(int)RenderLayer.PathLayer]);
                 }
             }
         }

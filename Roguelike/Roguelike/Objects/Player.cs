@@ -4,48 +4,48 @@ using RogueSharp;
 
 namespace Roguelike
 {
-    public struct Point { public int x; public int y; }
+    public struct Point { public int X; public int Y; }
 
     internal class Player : Entity
     {
-        public Player(float scale, Texture2D sprite, IMap Map) : base(scale, sprite, Map)
+        public Player(float scale, Texture2D sprite, IMap map) : base(scale, sprite, map)
         {
-            Statics.Camera.CenterOn(map.GetCell(X, Y));
+            Statics.Camera.CenterOn(Map.GetCell(X, Y));
         }
 
         public override bool Update(InputState inputState)
         {
-            var moved = false;
-            map.ComputeFov(X, Y, 30, true);
-            foreach (Cell cell in map.GetAllCells())
+            var _moved = false;
+            Map.ComputeFov(X, Y, 30, true);
+            foreach (var _cell in Map.GetAllCells())
             {
-                if (map.IsInFov(cell.X, cell.Y))
+                if (Map.IsInFov(_cell.X, _cell.Y))
                 {
-                    map.SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true);
+                    Map.SetCellProperties(_cell.X, _cell.Y, _cell.IsTransparent, _cell.IsWalkable, true);
                 }
             }
-            if (inputState.IsUp(PlayerIndex.One) && map.IsWalkable(X, Y - 1))
+            if (inputState.IsUp(PlayerIndex.One) && Map.IsWalkable(X, Y - 1))
             {
                 Y -= 1;
-                moved = true;
+                _moved = true;
             }
-            else if (inputState.IsDown(PlayerIndex.One) && map.IsWalkable(X, Y + 1))
+            else if (inputState.IsDown(PlayerIndex.One) && Map.IsWalkable(X, Y + 1))
             {
                 Y += 1;
-                moved = true;
+                _moved = true;
             }
-            if (inputState.IsLeft(PlayerIndex.One) && map.IsWalkable(X - 1, Y))
+            if (inputState.IsLeft(PlayerIndex.One) && Map.IsWalkable(X - 1, Y))
             {
                 X -= 1;
-                moved = true;
+                _moved = true;
             }
-            else if (inputState.IsRight(PlayerIndex.One) && map.IsWalkable(X + 1, Y))
+            else if (inputState.IsRight(PlayerIndex.One) && Map.IsWalkable(X + 1, Y))
             {
                 X += 1;
-                moved = true;
+                _moved = true;
             }
-            if (moved) Statics.Camera.CenterOn(map.GetCell(X, Y));
-            return moved;
+            if (_moved) Statics.Camera.CenterOn(Map.GetCell(X, Y));
+            return _moved;
         }
     }
 }

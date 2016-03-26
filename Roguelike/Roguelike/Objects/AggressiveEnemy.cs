@@ -7,15 +7,15 @@ namespace Roguelike
     {
         private readonly PathToPlayer path;
 
-        public AggressiveEnemy(float scale, Texture2D sprite, IMap map, PathToPlayer Path) : base(scale, sprite, map)
+        public AggressiveEnemy(float scale, Texture2D sprite, IMap map, PathToPlayer path) : base(scale, sprite, map)
         {
-            path = Path;
-            path.CreateFrom(X, Y);
+            this.path = path;
+            this.path.CreateFrom(X, Y);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (map.IsInFov(X, Y) || Statics.GameState == GameStates.Debugging)
+            if (Map.IsInFov(X, Y) || Statics.GameState == GameStates.Debugging)
                 base.Draw(spriteBatch);
             path.Draw(spriteBatch);
         }

@@ -19,21 +19,19 @@ namespace PL2D
 
 #pragma warning disable CC0074 // Make field readonly
         /// <summary>
-        /// The main gameplay camera - INITIALIZE TO OVERIDEN CAMERA TYPE BEFORE USING
+        /// The main gameplay Camera - INITIALIZE TO OVERIDEN CAMERA TYPE BEFORE USING
         /// </summary>
-        public static Camera camera;
+        public static Camera Camera;
 #pragma warning restore CC0074 // Make field readonly
 
-        private static readonly Color White = Color.White;
-
-        public static void drawTexture(SpriteBatch spriteBatch, Texture2D texture, Vector2 cell, RenderLayers Layer, Color tint)
+        public static void DrawTexture(SpriteBatch spriteBatch, Texture2D texture, Vector2 cell, RenderLayers layer, Color tint)
         {
-            spriteBatch.Draw(texture, cell, null, null, null, 0.0f, Vector2.One, tint, SpriteEffects.None, Layers[(int)Layer]);
+            spriteBatch.Draw(texture, cell, null, null, null, 0.0f, Vector2.One, tint, SpriteEffects.None, Layers[(int)layer]);
         }
 
-        public static void drawTexture(SpriteBatch spriteBatch, Texture2D texture, Rectangle cell, RenderLayers Layer, Color tint)
+        public static void DrawTexture(SpriteBatch spriteBatch, Texture2D texture, Rectangle cell, RenderLayers layer, Color tint)
         {
-            spriteBatch.Draw(texture, destinationRectangle: cell, layerDepth: Layers[(int)Layer], color: tint);
+            spriteBatch.Draw(texture, destinationRectangle: cell, layerDepth: Layers[(int)layer], color: tint);
         }
     }
 }

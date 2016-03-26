@@ -62,19 +62,19 @@ namespace Roguelike
         /// </summary>
         public void Update()
         {
-            for (int i = 0; i < MaxInputs; i++)
+            for (var _i = 0; _i < MaxInputs; _i++)
             {
-                LastKeyboardStates[i] = CurrentKeyboardStates[i];
-                LastGamePadStates[i] = CurrentGamePadStates[i];
+                LastKeyboardStates[_i] = CurrentKeyboardStates[_i];
+                LastGamePadStates[_i] = CurrentGamePadStates[_i];
 
-                CurrentKeyboardStates[i] = Keyboard.GetState();
-                CurrentGamePadStates[i] = GamePad.GetState((PlayerIndex)i);
+                CurrentKeyboardStates[_i] = Keyboard.GetState();
+                CurrentGamePadStates[_i] = GamePad.GetState((PlayerIndex)_i);
 
                 // Keep track of whether a gamepad has ever been
                 // connected, so we can detect if it is unplugged.
-                if (CurrentGamePadStates[i].IsConnected)
+                if (CurrentGamePadStates[_i].IsConnected)
                 {
-                    GamePadWasConnected[i] = true;
+                    GamePadWasConnected[_i] = true;
                 }
             }
 
@@ -85,31 +85,31 @@ namespace Roguelike
         public bool IsNewLeftMouseClick(out MouseState mouseState)
         {
             mouseState = CurrentMouseState;
-            return (CurrentMouseState.LeftButton == ButtonState.Released && LastMouseState.LeftButton == ButtonState.Pressed);
+            return CurrentMouseState.LeftButton == ButtonState.Released && LastMouseState.LeftButton == ButtonState.Pressed;
         }
 
         public bool IsNewRightMouseClick(out MouseState mouseState)
         {
             mouseState = CurrentMouseState;
-            return (CurrentMouseState.RightButton == ButtonState.Released && LastMouseState.RightButton == ButtonState.Pressed);
+            return CurrentMouseState.RightButton == ButtonState.Released && LastMouseState.RightButton == ButtonState.Pressed;
         }
 
         public bool IsNewThirdMouseClick(out MouseState mouseState)
         {
             mouseState = CurrentMouseState;
-            return (CurrentMouseState.MiddleButton == ButtonState.Pressed && LastMouseState.MiddleButton == ButtonState.Released);
+            return CurrentMouseState.MiddleButton == ButtonState.Pressed && LastMouseState.MiddleButton == ButtonState.Released;
         }
 
         public bool IsNewMouseScrollUp(out MouseState mouseState)
         {
             mouseState = CurrentMouseState;
-            return (CurrentMouseState.ScrollWheelValue > LastMouseState.ScrollWheelValue);
+            return CurrentMouseState.ScrollWheelValue > LastMouseState.ScrollWheelValue;
         }
 
         public bool IsNewMouseScrollDown(out MouseState mouseState)
         {
             mouseState = CurrentMouseState;
-            return (CurrentMouseState.ScrollWheelValue < LastMouseState.ScrollWheelValue);
+            return CurrentMouseState.ScrollWheelValue < LastMouseState.ScrollWheelValue;
         }
 
         public bool IsNewKeyPress(Keys key, PlayerIndex? controllingPlayer, out PlayerIndex playerIndex)
@@ -119,15 +119,15 @@ namespace Roguelike
                 // Read input from the specified player.
                 playerIndex = controllingPlayer.Value;
 
-                var i = (int)playerIndex;
+                var _i = (int)playerIndex;
 
-                return (CurrentKeyboardStates[i].IsKeyDown(key) && LastKeyboardStates[i].IsKeyUp(key));
+                return CurrentKeyboardStates[_i].IsKeyDown(key) && LastKeyboardStates[_i].IsKeyUp(key);
             }
             else
             {
                 // Accept input from any player.
-                return (IsNewKeyPress(key, PlayerIndex.One, out playerIndex) || IsNewKeyPress(key, PlayerIndex.Two, out playerIndex)
-                         || IsNewKeyPress(key, PlayerIndex.Three, out playerIndex) || IsNewKeyPress(key, PlayerIndex.Four, out playerIndex));
+                return IsNewKeyPress(key, PlayerIndex.One, out playerIndex) || IsNewKeyPress(key, PlayerIndex.Two, out playerIndex)
+                         || IsNewKeyPress(key, PlayerIndex.Three, out playerIndex) || IsNewKeyPress(key, PlayerIndex.Four, out playerIndex);
             }
         }
 
@@ -138,15 +138,15 @@ namespace Roguelike
                 // Read input from the specified player.
                 playerIndex = controllingPlayer.Value;
 
-                var i = (int)playerIndex;
+                var _i = (int)playerIndex;
 
-                return (CurrentGamePadStates[i].IsButtonDown(button) && LastGamePadStates[i].IsButtonUp(button));
+                return CurrentGamePadStates[_i].IsButtonDown(button) && LastGamePadStates[_i].IsButtonUp(button);
             }
             else
             {
                 // Accept input from any player.
-                return (IsNewButtonPress(button, PlayerIndex.One, out playerIndex) || IsNewButtonPress(button, PlayerIndex.Two, out playerIndex)
-                         || IsNewButtonPress(button, PlayerIndex.Three, out playerIndex) || IsNewButtonPress(button, PlayerIndex.Four, out playerIndex));
+                return IsNewButtonPress(button, PlayerIndex.One, out playerIndex) || IsNewButtonPress(button, PlayerIndex.Two, out playerIndex)
+                         || IsNewButtonPress(button, PlayerIndex.Three, out playerIndex) || IsNewButtonPress(button, PlayerIndex.Four, out playerIndex);
             }
         }
 
@@ -157,15 +157,15 @@ namespace Roguelike
                 // Read input from the specified player.
                 playerIndex = controllingPlayer.Value;
 
-                var i = (int)playerIndex;
+                var _i = (int)playerIndex;
 
-                return (CurrentKeyboardStates[i].IsKeyDown(key));
+                return CurrentKeyboardStates[_i].IsKeyDown(key);
             }
             else
             {
                 // Accept input from any player.
-                return (IsKeyPressed(key, PlayerIndex.One, out playerIndex) || IsKeyPressed(key, PlayerIndex.Two, out playerIndex)
-                         || IsKeyPressed(key, PlayerIndex.Three, out playerIndex) || IsKeyPressed(key, PlayerIndex.Four, out playerIndex));
+                return IsKeyPressed(key, PlayerIndex.One, out playerIndex) || IsKeyPressed(key, PlayerIndex.Two, out playerIndex)
+                         || IsKeyPressed(key, PlayerIndex.Three, out playerIndex) || IsKeyPressed(key, PlayerIndex.Four, out playerIndex);
             }
         }
 
@@ -176,97 +176,97 @@ namespace Roguelike
                 // Read input from the specified player.
                 playerIndex = controllingPlayer.Value;
 
-                var i = (int)playerIndex;
+                var _i = (int)playerIndex;
 
-                return (CurrentGamePadStates[i].IsButtonDown(button));
+                return CurrentGamePadStates[_i].IsButtonDown(button);
             }
             else
             {
                 // Accept input from any player.
-                return (IsButtonPressed(button, PlayerIndex.One, out playerIndex) || IsButtonPressed(button, PlayerIndex.Two, out playerIndex)
-                         || IsButtonPressed(button, PlayerIndex.Three, out playerIndex) || IsButtonPressed(button, PlayerIndex.Four, out playerIndex));
+                return IsButtonPressed(button, PlayerIndex.One, out playerIndex) || IsButtonPressed(button, PlayerIndex.Two, out playerIndex)
+                         || IsButtonPressed(button, PlayerIndex.Three, out playerIndex) || IsButtonPressed(button, PlayerIndex.Four, out playerIndex);
             }
         }
 
         public bool IsExitGame(PlayerIndex? controllingPlayer)
         {
-            PlayerIndex playerIndex;
+            PlayerIndex _playerIndex;
 
-            return IsNewKeyPress(Keys.Escape, controllingPlayer, out playerIndex) || IsNewButtonPress(Buttons.Back, controllingPlayer, out playerIndex);
+            return IsNewKeyPress(Keys.Escape, controllingPlayer, out _playerIndex) || IsNewButtonPress(Buttons.Back, controllingPlayer, out _playerIndex);
         }
 
         public bool IsLeft(PlayerIndex? controllingPlayer)
         {
-            PlayerIndex playerIndex;
+            PlayerIndex _playerIndex;
 
-            return IsNewButtonPress(Buttons.DPadLeft, controllingPlayer, out playerIndex) || IsNewButtonPress(Buttons.LeftThumbstickLeft, controllingPlayer, out playerIndex)
-                || IsNewKeyPress(Keys.A, controllingPlayer, out playerIndex);
+            return IsNewButtonPress(Buttons.DPadLeft, controllingPlayer, out _playerIndex) || IsNewButtonPress(Buttons.LeftThumbstickLeft, controllingPlayer, out _playerIndex)
+                || IsNewKeyPress(Keys.A, controllingPlayer, out _playerIndex);
         }
 
         public bool IsRight(PlayerIndex? controllingPlayer)
         {
-            PlayerIndex playerIndex;
+            PlayerIndex _playerIndex;
 
-            return IsNewButtonPress(Buttons.DPadRight, controllingPlayer, out playerIndex)
-                   || IsNewButtonPress(Buttons.LeftThumbstickRight, controllingPlayer, out playerIndex) || IsNewKeyPress(Keys.D, controllingPlayer, out playerIndex);
+            return IsNewButtonPress(Buttons.DPadRight, controllingPlayer, out _playerIndex)
+                   || IsNewButtonPress(Buttons.LeftThumbstickRight, controllingPlayer, out _playerIndex) || IsNewKeyPress(Keys.D, controllingPlayer, out _playerIndex);
         }
 
         public bool IsUp(PlayerIndex? controllingPlayer)
         {
-            PlayerIndex playerIndex;
+            PlayerIndex _playerIndex;
 
-            return IsNewButtonPress(Buttons.DPadUp, controllingPlayer, out playerIndex)
-                   || IsNewButtonPress(Buttons.LeftThumbstickUp, controllingPlayer, out playerIndex) || IsNewKeyPress(Keys.W, controllingPlayer, out playerIndex);
+            return IsNewButtonPress(Buttons.DPadUp, controllingPlayer, out _playerIndex)
+                   || IsNewButtonPress(Buttons.LeftThumbstickUp, controllingPlayer, out _playerIndex) || IsNewKeyPress(Keys.W, controllingPlayer, out _playerIndex);
         }
 
         public bool IsDown(PlayerIndex? controllingPlayer)
         {
-            PlayerIndex playerIndex;
+            PlayerIndex _playerIndex;
 
-            return IsNewButtonPress(Buttons.DPadDown, controllingPlayer, out playerIndex)
-                   || IsNewButtonPress(Buttons.LeftThumbstickDown, controllingPlayer, out playerIndex) || IsNewKeyPress(Keys.S, controllingPlayer, out playerIndex);
+            return IsNewButtonPress(Buttons.DPadDown, controllingPlayer, out _playerIndex)
+                   || IsNewButtonPress(Buttons.LeftThumbstickDown, controllingPlayer, out _playerIndex) || IsNewKeyPress(Keys.S, controllingPlayer, out _playerIndex);
         }
 
         public bool IsSpace(PlayerIndex? controllingPlayer)
         {
-            PlayerIndex playerIndex;
-            return IsNewKeyPress(Keys.Space, controllingPlayer, out playerIndex);
+            PlayerIndex _playerIndex;
+            return IsNewKeyPress(Keys.Space, controllingPlayer, out _playerIndex);
         }
 
         public bool IsScrollLeft(PlayerIndex? controllingPlayer)
         {
-            PlayerIndex playerIndex;
-            return IsKeyPressed(Keys.Left, controllingPlayer, out playerIndex);
+            PlayerIndex _playerIndex;
+            return IsKeyPressed(Keys.Left, controllingPlayer, out _playerIndex);
         }
 
         public bool IsScrollRight(PlayerIndex? controllingPlayer)
         {
-            PlayerIndex playerIndex;
-            return IsKeyPressed(Keys.Right, controllingPlayer, out playerIndex);
+            PlayerIndex _playerIndex;
+            return IsKeyPressed(Keys.Right, controllingPlayer, out _playerIndex);
         }
 
         public bool IsScrollUp(PlayerIndex? controllingPlayer)
         {
-            PlayerIndex playerIndex;
-            return IsKeyPressed(Keys.Up, controllingPlayer, out playerIndex);
+            PlayerIndex _playerIndex;
+            return IsKeyPressed(Keys.Up, controllingPlayer, out _playerIndex);
         }
 
         public bool IsScrollDown(PlayerIndex? controllingPlayer)
         {
-            PlayerIndex playerIndex;
-            return IsKeyPressed(Keys.Down, controllingPlayer, out playerIndex);
+            PlayerIndex _playerIndex;
+            return IsKeyPressed(Keys.Down, controllingPlayer, out _playerIndex);
         }
 
         public bool IsZoomOut(PlayerIndex? controllingPlayer)
         {
-            PlayerIndex playerIndex;
-            return (CurrentMouseState.ScrollWheelValue < LastMouseState.ScrollWheelValue) && IsKeyPressed(Keys.LeftControl, controllingPlayer, out playerIndex);
+            PlayerIndex _playerIndex;
+            return (CurrentMouseState.ScrollWheelValue < LastMouseState.ScrollWheelValue) && IsKeyPressed(Keys.LeftControl, controllingPlayer, out _playerIndex);
         }
 
         public bool IsZoomIn(PlayerIndex? controllingPlayer)
         {
-            PlayerIndex playerIndex;
-            return (CurrentMouseState.ScrollWheelValue > LastMouseState.ScrollWheelValue) && IsKeyPressed(Keys.LeftControl, controllingPlayer, out playerIndex);
+            PlayerIndex _playerIndex;
+            return (CurrentMouseState.ScrollWheelValue > LastMouseState.ScrollWheelValue) && IsKeyPressed(Keys.LeftControl, controllingPlayer, out _playerIndex);
         }
     }
 }

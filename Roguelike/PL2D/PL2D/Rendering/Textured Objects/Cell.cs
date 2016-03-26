@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace PL2D
+namespace PL2D.Rendering.Textured_Objects
 {
     /// <summary>
     /// The base part of any rendered item
@@ -9,17 +9,17 @@ namespace PL2D
     internal class Cell
     {
         /// <summary>
-        /// Gets or sets the position.
+        /// Gets or sets the Position.
         /// </summary>
         /// <value>
-        /// The position of the Cell.
+        /// The Position of the Cell.
         /// </value>
-        protected Vector2 position { get; set; }
+        protected Vector2 Position { get; set; }
 
         /// <summary>
         /// </summary>
         /// <value>
-        /// The x position of the Cell.
+        /// The x Position of the Cell.
         /// </value>
         public float X { get; protected set; }
 
@@ -27,7 +27,7 @@ namespace PL2D
         /// Gets or sets the y.
         /// </summary>
         /// <value>
-        /// The y position of the Cell.
+        /// The y Position of the Cell.
         /// </value>
         public float Y { get; protected set; }
 
@@ -37,30 +37,30 @@ namespace PL2D
         /// <value>
         /// The texture of the Cell.
         /// </value>
-        public Texture2D texture { get; private set; }
+        public Texture2D Texture { get; }
 
         /// <summary>
-        /// Gets or sets the layer.
+        /// Gets or sets the Layer.
         /// </summary>
         /// <value>
-        /// The layer the Cell will be rendered on.
+        /// The Layer the Cell will be rendered on.
         /// </value>
-        public RenderLayers layer { get; protected set; }
+        public RenderLayers Layer { get; protected set; }
 
-        public Color tint { get; protected set; }
+        public Color Tint { get; protected set; }
 
-        public Cell(float x, float y, Texture2D Texture, RenderLayers Layer, Color? Tint)
+        public Cell(float x, float y, Texture2D texture, RenderLayers layer, Color? tint)
         {
-            position = new Vector2(x, y);
-            texture = Texture;
-            layer = Layer;
-            tint = Tint.HasValue ? Tint.GetValueOrDefault() : Color.White;
+            Position = new Vector2(x, y);
+            Texture = texture;
+            Layer = layer;
+            Tint = tint.HasValue ? tint.GetValueOrDefault() : Color.White;
             GameLoopFunctions.Renderable.Add(this);
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            Render.drawTexture(spriteBatch, texture, position, layer, tint);
+            Render.DrawTexture(spriteBatch, Texture, Position, Layer, Tint);
         }
     }
 }

@@ -10,23 +10,23 @@ namespace Roguelike
         Debugging = 3
     }
 
-    public enum renderLayer
+    public enum RenderLayer
     {
-        backGroundLayer = 0,
-        pathLayer = 1,
-        spriteLayer = 2,
-        LENGTH_OF_ARRAY
+        BackGroundLayer = 0,
+        PathLayer = 1,
+        SpriteLayer = 2,
+        LengthOfArray
     }
 
     internal static class Statics
     {
-        public static readonly IRandom random = new DotNetRandom();
+        public static readonly IRandom Random = new DotNetRandom();
         public static GameStates GameState { get; set; }
         public static readonly float[] Layers = { 0.8f, 0.6f, 0.5f };
-        public const int mapWidth = 50;
-        public const int mapHeight = 30;
-        public const int spriteWidth = 64;
-        public const int spriteHeight = 64;
+        public const int MapWidth = 50;
+        public const int MapHeight = 30;
+        public const int SpriteWidth = 64;
+        public const int SpriteHeight = 64;
         public static readonly Camera Camera = new Camera();
     }
 }

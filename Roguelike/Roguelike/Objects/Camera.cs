@@ -16,25 +16,14 @@ namespace Roguelike
         public int ViewportWidth { get; set; }
         public int ViewportHeight { get; set; }
 
-        public Vector2 ViewportCenter
-        {
-            get
-            {
-                return new Vector2(ViewportWidth * 0.5f, ViewportHeight * 0.5f);
-            }
-        }
+        public Vector2 ViewportCenter => new Vector2(ViewportWidth * 0.5f, ViewportHeight * 0.5f);
 
-        public Matrix TranslationMatrix
-        {
-            get
-            {
-                return Matrix.CreateTranslation(-(int)Position.X,
-                    -(int)Position.Y, 0) *
-                    Matrix.CreateRotationZ(Rotation) *
-                    Matrix.CreateScale(new Vector3(Zoom, Zoom, 1)) *
-                    Matrix.CreateTranslation(new Vector3(ViewportCenter, 0));
-            }
-        }
+        public Matrix TranslationMatrix => 
+            Matrix.CreateTranslation(-(int)Position.X,
+                -(int)Position.Y, 0) *
+                Matrix.CreateRotationZ(Rotation) *
+                Matrix.CreateScale(new Vector3(Zoom, Zoom, 1)) *
+                Matrix.CreateTranslation(new Vector3(ViewportCenter, 0));
 
         public void AdjustZoom(float amount)
         {
@@ -45,17 +34,17 @@ namespace Roguelike
 
         public void MoveCamera(Vector2 cameraMovement, bool clampToMap = false)
         {
-            var newPosition = Position + cameraMovement;
+            var _newPosition = Position + cameraMovement;
 
-            Position = clampToMap ? MapClampedPosition(newPosition) : newPosition;
+            Position = clampToMap ? MapClampedPosition(_newPosition) : _newPosition;
         }
 
         public Rectangle ViewportWorldBoundry()
         {
-            var viewPortCorner = ScreenToWorld(new Vector2(0, 0));
-            var viewPortBottomCorner = ScreenToWorld(new Vector2(ViewportWidth, ViewportHeight));
+            var _viewPortCorner = ScreenToWorld(new Vector2(0, 0));
+            var _viewPortBottomCorner = ScreenToWorld(new Vector2(ViewportWidth, ViewportHeight));
 
-            return new Rectangle((int)viewPortCorner.X, (int)viewPortCorner.Y, (int)viewPortBottomCorner.X, (int)viewPortBottomCorner.Y);
+            return new Rectangle((int)_viewPortCorner.X, (int)_viewPortCorner.Y, (int)_viewPortBottomCorner.X, (int)_viewPortBottomCorner.Y);
         }
 
         public void CenterOn(Vector2 position)
@@ -70,17 +59,17 @@ namespace Roguelike
 
         private Vector2 CenteredPosition(RogueSharp.Cell cell, bool clampToMap = false)
         {
-            var cameraPosition = new Vector2(cell.X * Statics.spriteWidth, cell.Y * Statics.spriteHeight);
-            var cameraCenteredOnTilePosition = new Vector2(cameraPosition.X + Statics.spriteWidth / 2, cameraPosition.Y + Statics.spriteHeight / 2);
-            return clampToMap ? MapClampedPosition(cameraCenteredOnTilePosition) : cameraCenteredOnTilePosition;
+            var _cameraPosition = new Vector2(cell.X * Statics.SpriteWidth, cell.Y * Statics.SpriteHeight);
+            var _cameraCenteredOnTilePosition = new Vector2(_cameraPosition.X + Statics.SpriteWidth / 2, _cameraPosition.Y + Statics.SpriteHeight / 2);
+            return clampToMap ? MapClampedPosition(_cameraCenteredOnTilePosition) : _cameraCenteredOnTilePosition;
         }
 
         private Vector2 MapClampedPosition(Vector2 position)
         {
-            var CameraMax = new Vector2(Statics.mapWidth * Statics.spriteWidth - (ViewportWidth / Zoom / 2),
-                Statics.mapHeight * Statics.spriteHeight - (ViewportHeight / Zoom / 2));
+            var _cameraMax = new Vector2(Statics.MapWidth * Statics.SpriteWidth - ViewportWidth / Zoom / 2,
+                Statics.MapHeight * Statics.SpriteHeight - ViewportHeight / Zoom / 2);
 
-            return Vector2.Clamp(position, new Vector2(ViewportWidth / Zoom / 2, ViewportHeight / Zoom / 2), CameraMax);
+            return Vector2.Clamp(position, new Vector2(ViewportWidth / Zoom / 2, ViewportHeight / Zoom / 2), _cameraMax);
         }
 
         public Vector2 WorldToScreen(Vector2 worldPosition)
@@ -95,29 +84,29 @@ namespace Roguelike
 
         public void Update(InputState inputState, PlayerIndex? controllingPlayer)
         {
-            var cameraMovement = Vector2.Zero;
+            var _cameraMovement = Vector2.Zero;
 
             if (inputState.IsScrollLeft(controllingPlayer))
-                cameraMovement.X = -1;
+                _cameraMovement.X = -1;
             else if (inputState.IsScrollRight(controllingPlayer))
-                cameraMovement.X = 1;
+                _cameraMovement.X = 1;
             if (inputState.IsScrollDown(controllingPlayer))
-                cameraMovement.Y = 1;
+                _cameraMovement.Y = 1;
             else if (inputState.IsScrollUp(controllingPlayer))
-                cameraMovement.Y = -1;
+                _cameraMovement.Y = -1;
             if (inputState.IsZoomIn(controllingPlayer))
                 AdjustZoom(.25f);
             else if (inputState.IsZoomOut(controllingPlayer))
                 AdjustZoom(-.25f);
 
-            if (cameraMovement != Vector2.Zero)
+            if (_cameraMovement != Vector2.Zero)
             {
-                cameraMovement.Normalize();
+                _cameraMovement.Normalize();
             }
 
-            cameraMovement *= 25f;
+            _cameraMovement *= 25f;
 
-            MoveCamera(cameraMovement, true);
+            MoveCamera(_cameraMovement, true);
         }
     }
 }

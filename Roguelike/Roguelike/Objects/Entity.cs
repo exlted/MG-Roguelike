@@ -6,18 +6,18 @@ namespace Roguelike
     internal class Entity
     {
         private Point pos;
-        protected readonly IMap map;
-        public int X { get { return pos.x; } protected set { pos.x = value; } }
-        public int Y { get { return pos.y; } protected set { pos.y = value; } }
+        protected readonly IMap Map;
+        public int X { get { return pos.X; } protected set { pos.X = value; } }
+        public int Y { get { return pos.Y; } protected set { pos.Y = value; } }
         public float Scale { get; private set; }
-        public Texture2D Sprite { get; private set; }
+        public Texture2D Sprite { get; }
 
-        public Entity(float scale, Texture2D sprite, IMap Map)
+        public Entity(float scale, Texture2D sprite, IMap map)
         {
-            map = Map;
-            var temp = GetRandomEmptyCell();
-            X = temp.X;
-            Y = temp.Y;
+            Map = map;
+            var _randomEmptyCell = GetRandomEmptyCell();
+            X = _randomEmptyCell.X;
+            Y = _randomEmptyCell.Y;
             Scale = scale;
             Sprite = sprite;
         }
@@ -26,18 +26,18 @@ namespace Roguelike
         {
             while (true)
             {
-                var x = Statics.random.Next(49);
-                var y = Statics.random.Next(29);
-                if (map.IsWalkable(x, y))
+                var _x = Statics.Random.Next(49);
+                var _y = Statics.Random.Next(29);
+                if (Map.IsWalkable(_x, _y))
                 {
-                    return map.GetCell(x, y);
+                    return Map.GetCell(_x, _y);
                 }
             }
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            Game1.drawTexture(spriteBatch, Sprite, map.GetCell(X, Y), renderLayer.spriteLayer);
+            Game1.DrawTexture(spriteBatch, Sprite, Map.GetCell(X, Y), RenderLayer.SpriteLayer);
         }
 
 #pragma warning disable

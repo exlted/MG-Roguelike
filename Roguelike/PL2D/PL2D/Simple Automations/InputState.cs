@@ -16,14 +16,12 @@ namespace PL2D
 {
     /// <summary>
     ///    Helper for reading input from keyboard, gamepad, and touch input. This class
-    ///    tracks both the current and previous state of the input devices, and implements
+    ///    tracks both the current and previous State of the input devices, and implements
     ///    query methods for high level input actions such as "move up through the menu"
     ///    or "pause the game".
     /// </summary>
     public class InputState
     {
-        private delegate bool InputType(Keys selectedKey, PlayerIndex? controllingPlayer);
-
         #region Fields&Update
 
         public const int MaxInputs = 4;
@@ -62,23 +60,23 @@ namespace PL2D
         }
 
         /// <summary>
-        ///    Reads the latest state of the keyboard and gamepad.
+        ///    Reads the latest State of the keyboard and gamepad.
         /// </summary>
         public void Update()
         {
-            for (int i = 0; i < MaxInputs; i++)
+            for (var _i = 0; _i < MaxInputs; _i++)
             {
-                LastKeyboardStates[i] = CurrentKeyboardStates[i];
-                LastGamePadStates[i] = CurrentGamePadStates[i];
+                LastKeyboardStates[_i] = CurrentKeyboardStates[_i];
+                LastGamePadStates[_i] = CurrentGamePadStates[_i];
 
-                CurrentKeyboardStates[i] = Keyboard.GetState();
-                CurrentGamePadStates[i] = GamePad.GetState((PlayerIndex)i);
+                CurrentKeyboardStates[_i] = Keyboard.GetState();
+                CurrentGamePadStates[_i] = GamePad.GetState((PlayerIndex)_i);
 
                 // Keep track of whether a gamepad has ever been
                 // connected, so we can detect if it is unplugged.
-                if (CurrentGamePadStates[i].IsConnected)
+                if (CurrentGamePadStates[_i].IsConnected)
                 {
-                    GamePadWasConnected[i] = true;
+                    GamePadWasConnected[_i] = true;
                 }
             }
 
@@ -104,15 +102,15 @@ namespace PL2D
                 // Read input from the specified player.
                 playerIndex = controllingPlayer.Value;
 
-                var i = (int)playerIndex;
+                var _i = (int)playerIndex;
 
-                return (CurrentKeyboardStates[i].IsKeyDown(key) && LastKeyboardStates[i].IsKeyUp(key));
+                return CurrentKeyboardStates[_i].IsKeyDown(key) && LastKeyboardStates[_i].IsKeyUp(key);
             }
             else
             {
                 // Accept input from any player.
-                return (IsNewKeyPress(key, PlayerIndex.One, out playerIndex) || IsNewKeyPress(key, PlayerIndex.Two, out playerIndex)
-                         || IsNewKeyPress(key, PlayerIndex.Three, out playerIndex) || IsNewKeyPress(key, PlayerIndex.Four, out playerIndex));
+                return IsNewKeyPress(key, PlayerIndex.One, out playerIndex) || IsNewKeyPress(key, PlayerIndex.Two, out playerIndex)
+                         || IsNewKeyPress(key, PlayerIndex.Three, out playerIndex) || IsNewKeyPress(key, PlayerIndex.Four, out playerIndex);
             }
         }
 
@@ -130,15 +128,15 @@ namespace PL2D
                 // Read input from the specified player.
                 playerIndex = controllingPlayer.Value;
 
-                var i = (int)playerIndex;
+                var _i = (int)playerIndex;
 
-                return (CurrentGamePadStates[i].IsButtonDown(button) && LastGamePadStates[i].IsButtonUp(button));
+                return CurrentGamePadStates[_i].IsButtonDown(button) && LastGamePadStates[_i].IsButtonUp(button);
             }
             else
             {
                 // Accept input from any player.
-                return (IsNewButtonPress(button, PlayerIndex.One, out playerIndex) || IsNewButtonPress(button, PlayerIndex.Two, out playerIndex)
-                         || IsNewButtonPress(button, PlayerIndex.Three, out playerIndex) || IsNewButtonPress(button, PlayerIndex.Four, out playerIndex));
+                return IsNewButtonPress(button, PlayerIndex.One, out playerIndex) || IsNewButtonPress(button, PlayerIndex.Two, out playerIndex)
+                         || IsNewButtonPress(button, PlayerIndex.Three, out playerIndex) || IsNewButtonPress(button, PlayerIndex.Four, out playerIndex);
             }
         }
 
@@ -156,15 +154,15 @@ namespace PL2D
                 // Read input from the specified player.
                 playerIndex = controllingPlayer.Value;
 
-                var i = (int)playerIndex;
+                var _i = (int)playerIndex;
 
-                return (CurrentKeyboardStates[i].IsKeyDown(key));
+                return CurrentKeyboardStates[_i].IsKeyDown(key);
             }
             else
             {
                 // Accept input from any player.
-                return (IsKeyPressed(key, PlayerIndex.One, out playerIndex) || IsKeyPressed(key, PlayerIndex.Two, out playerIndex)
-                         || IsKeyPressed(key, PlayerIndex.Three, out playerIndex) || IsKeyPressed(key, PlayerIndex.Four, out playerIndex));
+                return IsKeyPressed(key, PlayerIndex.One, out playerIndex) || IsKeyPressed(key, PlayerIndex.Two, out playerIndex)
+                         || IsKeyPressed(key, PlayerIndex.Three, out playerIndex) || IsKeyPressed(key, PlayerIndex.Four, out playerIndex);
             }
         }
 
@@ -182,15 +180,15 @@ namespace PL2D
                 // Read input from the specified player.
                 playerIndex = controllingPlayer.Value;
 
-                var i = (int)playerIndex;
+                var _i = (int)playerIndex;
 
-                return (CurrentGamePadStates[i].IsButtonDown(button));
+                return CurrentGamePadStates[_i].IsButtonDown(button);
             }
             else
             {
                 // Accept input from any player.
-                return (IsButtonPressed(button, PlayerIndex.One, out playerIndex) || IsButtonPressed(button, PlayerIndex.Two, out playerIndex)
-                         || IsButtonPressed(button, PlayerIndex.Three, out playerIndex) || IsButtonPressed(button, PlayerIndex.Four, out playerIndex));
+                return IsButtonPressed(button, PlayerIndex.One, out playerIndex) || IsButtonPressed(button, PlayerIndex.Two, out playerIndex)
+                         || IsButtonPressed(button, PlayerIndex.Three, out playerIndex) || IsButtonPressed(button, PlayerIndex.Four, out playerIndex);
             }
         }
 
@@ -204,11 +202,11 @@ namespace PL2D
         /// <param name="selectedKey">The selected key.</param>
         /// <param name="controllingPlayer">The controlling player.</param>
         /// <returns></returns>
-        public bool isKeyPressed(Keys selectedKey, PlayerIndex? controllingPlayer)
+        public bool IsKeyPressed(Keys selectedKey, PlayerIndex? controllingPlayer)
         {
-            PlayerIndex playerIndex;
+            PlayerIndex _playerIndex;
 
-            return IsKeyPressed(selectedKey, controllingPlayer, out playerIndex);
+            return IsKeyPressed(selectedKey, controllingPlayer, out _playerIndex);
         }
 
         /// <summary>
@@ -217,11 +215,11 @@ namespace PL2D
         /// <param name="selectedKey">The selected key.</param>
         /// <param name="controllingPlayer">The controlling player.</param>
         /// <returns></returns>
-        public bool isNewKeyPressed(Keys selectedKey, PlayerIndex? controllingPlayer)
+        public bool IsNewKeyPressed(Keys selectedKey, PlayerIndex? controllingPlayer)
         {
-            PlayerIndex playerIndex;
+            PlayerIndex _playerIndex;
 
-            return IsNewKeyPress(selectedKey, controllingPlayer, out playerIndex);
+            return IsNewKeyPress(selectedKey, controllingPlayer, out _playerIndex);
         }
 
         /// <summary>
@@ -230,11 +228,11 @@ namespace PL2D
         /// <param name="selectedButton">The selected button.</param>
         /// <param name="controllingPlayer">The controlling player.</param>
         /// <returns></returns>
-        public bool isButtonPressed(Buttons selectedButton, PlayerIndex? controllingPlayer)
+        public bool IsButtonPressed(Buttons selectedButton, PlayerIndex? controllingPlayer)
         {
-            PlayerIndex playerIndex;
+            PlayerIndex _playerIndex;
 
-            return IsButtonPressed(selectedButton, controllingPlayer, out playerIndex);
+            return IsButtonPressed(selectedButton, controllingPlayer, out _playerIndex);
         }
 
         /// <summary>
@@ -243,11 +241,11 @@ namespace PL2D
         /// <param name="selectedButton">The selected button.</param>
         /// <param name="controllingPlayer">The controlling player.</param>
         /// <returns></returns>
-        public bool isNewButtonPressed(Buttons selectedButton, PlayerIndex? controllingPlayer)
+        public bool IsNewButtonPressed(Buttons selectedButton, PlayerIndex? controllingPlayer)
         {
-            PlayerIndex playerIndex;
+            PlayerIndex _playerIndex;
 
-            return IsNewButtonPress(selectedButton, controllingPlayer, out playerIndex);
+            return IsNewButtonPress(selectedButton, controllingPlayer, out _playerIndex);
         }
 
         /// <summary>
@@ -258,7 +256,7 @@ namespace PL2D
         public bool IsNewLeftMouseClick(out MouseState mouseState)
         {
             mouseState = CurrentMouseState;
-            return (CurrentMouseState.LeftButton == ButtonState.Released && LastMouseState.LeftButton == ButtonState.Pressed);
+            return CurrentMouseState.LeftButton == ButtonState.Released && LastMouseState.LeftButton == ButtonState.Pressed;
         }
 
         /// <summary>
@@ -269,18 +267,18 @@ namespace PL2D
         public bool IsNewRightMouseClick(out MouseState mouseState)
         {
             mouseState = CurrentMouseState;
-            return (CurrentMouseState.RightButton == ButtonState.Released && LastMouseState.RightButton == ButtonState.Pressed);
+            return CurrentMouseState.RightButton == ButtonState.Released && LastMouseState.RightButton == ButtonState.Pressed;
         }
 
         /// <summary>
-        /// Determines whether the "third" button of the mouse has been clicked since the last update
+        /// Determines whether the "third" button of the mouse has been Clicked since the last update
         /// </summary>
         /// <param name="mouseState">State of the mouse.</param>
         /// <returns></returns>
         public bool IsNewThirdMouseClick(out MouseState mouseState)
         {
             mouseState = CurrentMouseState;
-            return (CurrentMouseState.MiddleButton == ButtonState.Pressed && LastMouseState.MiddleButton == ButtonState.Released);
+            return CurrentMouseState.MiddleButton == ButtonState.Pressed && LastMouseState.MiddleButton == ButtonState.Released;
         }
 
         /// <summary>
@@ -291,7 +289,7 @@ namespace PL2D
         public bool IsNewMouseScrollUp(out MouseState mouseState)
         {
             mouseState = CurrentMouseState;
-            return (CurrentMouseState.ScrollWheelValue > LastMouseState.ScrollWheelValue);
+            return CurrentMouseState.ScrollWheelValue > LastMouseState.ScrollWheelValue;
         }
 
         /// <summary>
@@ -302,7 +300,7 @@ namespace PL2D
         public bool IsNewMouseScrollDown(out MouseState mouseState)
         {
             mouseState = CurrentMouseState;
-            return (CurrentMouseState.ScrollWheelValue < LastMouseState.ScrollWheelValue);
+            return CurrentMouseState.ScrollWheelValue < LastMouseState.ScrollWheelValue;
         }
 
         #endregion AllInputChecks

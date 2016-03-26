@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using PL2D.Exceptions;
 
 namespace PL2D
 {
@@ -9,12 +8,10 @@ namespace PL2D
     /// </summary>
     public class Game1 : Game
     {
-        private readonly GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
@@ -28,8 +25,8 @@ namespace PL2D
         {
             // TODO: Add your initialization logic here
 
-            // TODO: Initialize camera child here
-            //Render.camera = new ___
+            // TODO: Initialize Camera child here
+            //Render.Camera = new ___
             GameLoopFunctions.Init();
             base.Initialize();
         }
@@ -40,10 +37,10 @@ namespace PL2D
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
+            // Create a new SpriteBatch, which can be used to draw Textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            Assets.importContent(this);
+            Assets.ImportContent(this);
         }
 
         /// <summary>
