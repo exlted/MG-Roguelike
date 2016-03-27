@@ -92,10 +92,15 @@ namespace Roguelike
                 Exit();
             else if (inputState.IsSpace(PlayerIndex.One))
             {
-                if (Statics.GameState == GameStates.PlayerTurn)
-                    Statics.GameState = GameStates.Debugging;
-                else if (Statics.GameState == GameStates.Debugging)
-                    Statics.GameState = GameStates.PlayerTurn;
+                switch (Statics.GameState)
+                {
+                    case GameStates.PlayerTurn:
+                        Statics.GameState = GameStates.Debugging;
+                        break;
+                    case GameStates.Debugging:
+                        Statics.GameState = GameStates.PlayerTurn;
+                        break;
+                }
             }
             else if (entities[0].Update(inputState))
                 for (var _i = 1; _i < entities.Length; _i++)
