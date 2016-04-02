@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Game1.cs" />
     <Compile Include="PL2D\Rendering\GUI\GUI Elements\Button.cs" />
+    <Compile Include="PL2D\Rendering\GUI\GUI Elements\RadioButton.cs" />
+    <Compile Include="PL2D\Rendering\GUI\GUI Elements\ToggleBox.cs" />
     <Compile Include="PL2D\Rendering\GUI\GUI.cs" />
     <Compile Include="PL2D\Simple Automations\Assets.cs" />
     <Compile Include="PL2D\Rendering\Camera.cs" />

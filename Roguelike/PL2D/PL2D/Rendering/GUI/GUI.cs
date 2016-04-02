@@ -21,5 +21,6 @@ namespace PL2D.Rendering.GUI
     interface IGuiElement
     {
         void Render(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch);
+        void Update();
     }
 }
