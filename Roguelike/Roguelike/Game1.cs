@@ -121,10 +121,8 @@ namespace Roguelike
             // TODO: Add your drawing code here
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null, null, null, null, Statics.Camera.TranslationMatrix);
 
-            foreach (var _cell in map.GetAllCells())
+            foreach (var _cell in map.GetAllCells().Where(cell => cell.IsExplored || Statics.GameState == GameStates.Debugging))
             {
-                if (!_cell.IsExplored && Statics.GameState != GameStates.Debugging)
-                    continue;
                 DrawTexture(spriteBatch, _cell.IsWalkable? textures["floor"] : textures["wall"], _cell, RenderLayer.BackGroundLayer);
             }
             foreach (var _i in entities)

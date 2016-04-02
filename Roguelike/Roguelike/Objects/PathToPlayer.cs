@@ -30,13 +30,11 @@ namespace Roguelike
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (cells != null && Statics.GameState == GameStates.Debugging)
+            if (cells == null || Statics.GameState != GameStates.Debugging) return;
+            for (var _cell = cells.Start; cells.CurrentStep != cells.End; _cell = cells.StepForward())
             {
-                for (var _cell = cells.Start; cells.CurrentStep != cells.End; _cell = cells.StepForward())
-                {
-                    var _position = new Vector2(_cell.X * Statics.SpriteWidth, _cell.Y * Statics.SpriteHeight);
-                    spriteBatch.Draw(sprite, _position, null, null, null, 0.0f, Vector2.One, Color.White, SpriteEffects.None, Statics.Layers[(int)RenderLayer.PathLayer]);
-                }
+                var _position = new Vector2(_cell.X * Statics.SpriteWidth, _cell.Y * Statics.SpriteHeight);
+                spriteBatch.Draw(sprite, _position, null, null, null, 0.0f, Vector2.One, Color.White, SpriteEffects.None, Statics.Layers[(int)RenderLayer.PathLayer]);
             }
         }
     }
