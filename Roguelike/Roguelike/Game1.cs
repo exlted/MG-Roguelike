@@ -56,12 +56,7 @@ namespace Roguelike
 
             // TODO: use this.Content to load your game content here
             var _import  = Directory.GetFiles(System.IO.Path.GetFullPath(@"Content/Textures/"));
-            var _paths =
-                from _path in _import
-                where _path.Contains(".png")
-                select _path;
-
-            foreach (var _i in _paths)
+            foreach (var _i in _import.Where(s => s.Contains(".png")))
             {
                 textures.Add(System.IO.Path.GetFileNameWithoutExtension(_i), Content.Load<Texture2D>("Textures/" + System.IO.Path.GetFileNameWithoutExtension(_i)));
             }
