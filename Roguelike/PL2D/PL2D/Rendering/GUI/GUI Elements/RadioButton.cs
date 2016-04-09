@@ -25,13 +25,13 @@ namespace PL2D.Rendering.GUI.GUI_Elements
             EventHandler _tempHandler = SelectionChanged;
             foreach (var _radioButton in Buttons)
             {
-                _radioButton.Update();
                 foreach (var _r in _radioButton.SelectionChanged.GetInvocationList().Where(r => r.Method == _tempHandler.Method))
                 {
                     _temp = true;
                 }
                 if (!_temp)
                     _radioButton.SelectionChanged += SelectionChanged;
+                _radioButton.Update();
             }
         }
 

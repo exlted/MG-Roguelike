@@ -9,9 +9,11 @@ namespace PL2D
     public class Game1 : Game
     {
         private SpriteBatch spriteBatch;
+        private GraphicsDeviceManager graphics;
 
         public Game1()
         {
+            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
@@ -27,6 +29,7 @@ namespace PL2D
 
             // TODO: Initialize Camera child here
             //Render.Camera = new ___
+            Render.Camera = new Camera();
             GameLoopFunctions.Init();
             base.Initialize();
         }
