@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -15,30 +16,51 @@ namespace PL2D
 
         public static void ImportTextures(Game game)
         {
-            var _import  = Directory.GetFiles(Path.GetFullPath(@"GameContent/Textures/"));
-            foreach (var _i in _import.Where(i => i.Contains(".png") || i.Contains(".jpg") || i.Contains(".bmp") || i.Contains(".dds")
-                                                   || i.Contains(".dib") || i.Contains(".hdr") || i.Contains(".pfm") || i.Contains("ppm")
-                                                   || i.Contains(".tga")))
+            try
             {
-                Textures.Add(Path.GetFileNameWithoutExtension(_i), game.Content.Load<Texture2D>("Textures/" + Path.GetFileNameWithoutExtension(_i)));
+                var _import = Directory.GetFiles(Path.GetFullPath(@"GameContent/Textures/"));
+                foreach (var _i in _import.Where(i => i.Contains(".png") || i.Contains(".jpg") || i.Contains(".bmp") || i.Contains(".dds")
+                                                       || i.Contains(".dib") || i.Contains(".hdr") || i.Contains(".pfm") || i.Contains("ppm")
+                                                       || i.Contains(".tga")))
+                {
+                    Textures.Add(Path.GetFileNameWithoutExtension(_i), game.Content.Load<Texture2D>("Textures/" + Path.GetFileNameWithoutExtension(_i)));
+                }
+            }
+            catch (Exception)
+            {
+
             }
         }
 
         public static void ImportSounds(Game game)
         {
-            var _import = Directory.GetFiles(Path.GetFullPath(@"GameContent/Sounds/"));
-            foreach (var _i in _import.Where(i => i.Contains(".xap") || i.Contains(".wma") || i.Contains(".mp3") || i.Contains(".wav")))
+            try
             {
-                Sounds.Add(Path.GetFileNameWithoutExtension(_i), game.Content.Load<SoundEffect>("Sounds/" + Path.GetFileNameWithoutExtension(_i)));
+                var _import = Directory.GetFiles(Path.GetFullPath(@"GameContent/Sounds/"));
+                foreach (var _i in _import.Where(i => i.Contains(".xap") || i.Contains(".wma") || i.Contains(".mp3") || i.Contains(".wav")))
+                {
+                    Sounds.Add(Path.GetFileNameWithoutExtension(_i), game.Content.Load<SoundEffect>("Sounds/" + Path.GetFileNameWithoutExtension(_i)));
+                }
+            }
+            catch (Exception)
+            {
             }
         }
 
         public static void ImportFonts(Game game)
         {
-            var _import = Directory.GetFiles(Path.GetFullPath(@"GameContent/Fonts/"));
-            foreach (var _i in _import.Where(i => i.Contains(".spritefont")))
+            try
             {
-                Fonts.Add(Path.GetFileNameWithoutExtension(_i), game.Content.Load<SpriteFont>("Fonts/" + Path.GetFileNameWithoutExtension(_i)));
+                var _import = Directory.GetFiles(Path.GetFullPath(@"GameContent/Fonts/"));
+                foreach (var _i in _import.Where(i => i.Contains(".spritefont")))
+                {
+                    Fonts.Add(Path.GetFileNameWithoutExtension(_i),
+                        game.Content.Load<SpriteFont>("Fonts/" + Path.GetFileNameWithoutExtension(_i)));
+                }
+
+            }
+            catch (Exception)
+            {
             }
         }
 
